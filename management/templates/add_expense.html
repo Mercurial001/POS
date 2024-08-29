@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="add-expense-utmost-container-section">
+        <div class="add-expense-title-header-div">
+            Add Expense
+        </div>
+        <div class="add-expense-form-container-div">
+            <form class="add-expense-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="add-expense-form-field-div">
+                    <input placeholder="Expense Amount" class="add-expense-field" type="number" name="expense-amount">
+<!--                    {{ add_expense_form.expense }}-->
+                </div>
+                <div class="add-expense-form-field-div">
+                    <textarea placeholder="Expense Description"
+                              class="add-expense-field auto-growth" name="expense-description"></textarea>
+<!--                    {{ add_expense_form.description }}-->
+                </div>
+                <div class="add-expense-form-image-field-div">
+<!--                    {{ add_expense_form.image }}-->
+                    <input type="file" name="expense-document" accept="image/*">
+                </div>
+                <div class="add-expense-btn-div">
+                    <button class="add-expense-btn" type="submit">Add Expense</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+
+{% endblock %}

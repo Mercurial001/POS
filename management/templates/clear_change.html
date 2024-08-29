@@ -1,0 +1,23 @@
+{% if not scanned_products_header.change == None %}
+    <div class="clear-change-container-div" id="change-container">
+        <div class="clear-change-htmx-change">
+            Change: {{ scanned_products_header.change }}
+        </div>
+    </div>
+    <div class="clear-change-container-div" id="">
+        <form class="clear-change-htmx-clear-change-form"
+              hx-trigger="htmx:afterSwap">
+            {% csrf_token %}
+            <button hx-post="{% url 'htmx-clear-change' request.user %}"
+                    hx-target=".scanned-sell-clear-change-div"
+                    hx-swap="outerHTML"
+                    hx-trigger="click"
+                    id="clear-change-htmx-btn"
+                    class="clear-change-btn">
+                Clear
+            </button>
+        </form>
+    </div>
+{% else %}
+
+{% endif %}

@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="sold-products-utmost-container-div">
+        {% if sold_products_obj.refunded %}
+            <div class="sold-product-instance-block-div">
+                Refunded
+                <table class="sold-product-table">
+                    <tr class="sold-product-table-row">
+                        <th class="sold-product-table-head">Product</th>
+                        <th class="sold-product-table-head">Quantity Sold</th>
+                        <th class="sold-product-table-head" style="visibility:hidden">
+                            awdawd
+                        </th>
+                        <th class="sold-product-table-head">Price</th>
+                        <th class="sold-product-table-head"></th>
+                    </tr>
+                    {% for product in sold_products_obj.product.all %}
+                        {% if product.refunded %}
+                            <tr class="sold-product-table-row">
+                                <td class="sold-product-table-data">
+        <!--                            <form action="{% url 'refund' product.id sold_products_obj.id" method="POST">-->
+        <!--                                {% csrf_token %}-->
+        <!--                                <input type="hidden" value="{{ product.id }}">-->
+        <!--                                <input type="hidden" value="{{ sold_products_obj.id }}">-->
+        <!--                                <button type="submit">{{ product.name }}</button>-->
+        <!--                            </form>-->
+                                    {{ product.name }}
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                        <span style="text-decoration: line-through;">{{ product.refunded_quantity }}</span>
+                                        <span>{{ product.sold_quantity }}</span>
+                                    <div>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="product-id" value="{{ product.id }}">
+                                            <input type="hidden"
+                                                   name="sold-refunded-product-id"
+                                                   value="{{ sold_products_obj.id }}">
+                                            <input value="{{ product.sold_quantity }}"
+                                                   type="number"
+                                                   name="refund-quantity"
+                                                   class="refund-quantity-input-field">
+                                        </form>
+                                    </div>
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    x
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    <span style="text-decoration: line-through;">{{ product.refunded_price }}</span>
+                                    <span>{{ product.multiply }}</span>
+                                </td>
+                                <td class="sold-product-table-data">
+                                    =
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    {{ product.multiply }}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr class="sold-product-table-row">
+                                <td class="sold-product-table-data">
+        <!--                            <form action="{% url 'refund' product.id sold_products_obj.id" method="POST">-->
+        <!--                                {% csrf_token %}-->
+        <!--                                <input type="hidden" value="{{ product.id }}">-->
+        <!--                                <input type="hidden" value="{{ sold_products_obj.id }}">-->
+        <!--                                <button type="submit">{{ product.name }}</button>-->
+        <!--                            </form>-->
+                                    {{ product.name }}
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    <span>{{ product.sold_quantity }}</span>
+                                    <div>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="product-id" value="{{ product.id }}">
+                                            <input type="hidden"
+                                                   name="sold-refunded-product-id"
+                                                   value="{{ sold_products_obj.id }}">
+                                            <input value="{{ product.sold_quantity }}"
+                                                   type="number"
+                                                   name="refund-quantity"
+                                                   class="refund-quantity-input-field">
+                                        </form>
+                                    </div>
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    x
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    {{ product.price }}
+                                </td>
+                                <td class="sold-product-table-data">
+                                    =
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    {{ product.multiply }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+    <!--                <tr class="sold-product-table-row">-->
+    <!--                    <td class="sold-product-table-data" colspan="3">ID: {{ sold_products_obj.id }}</td>-->
+    <!--                </tr>-->
+                    <tr class="sold-product-table-row">
+                        <td class="sold-product-table-data" colspan="3">Cash: {{ sold_products_obj.cash }}</td>
+                    </tr>
+                    <tr class="sold-product-table-row">
+                        <td class="sold-product-table-data" colspan="3">
+                            Change:
+                            <span style="text-decoration: line-through;">{{ sold_products_obj.refunded_change }}</span>
+                            <span>{{ sold_products_obj.change }}</span>
+                        </td>
+                    </tr>
+                    <tr class="sold-product-table-row">
+                        <td class="sold-product-table-data" colspan="3">
+                            Cashier: {{ sold_products_obj.cashier }}
+                        </td>
+                    </tr>
+                    <tr class="sold-product-table-row">
+                        <td class="sold-product-table-data" colspan="3">Date Sold: {{ sold_products_obj.date_sold_no_time }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Price</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right;">
+                            <span style="text-decoration: line-through;">{{ sold_products_obj.refunded_total_price }}</span>
+                            <span>{{ sold_products_obj.total_price }}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        {% else %}
+            <div class="sold-product-instance-block-div">
+                <table class="sold-product-table">
+                    <tr class="sold-product-table-row">
+                        <th class="sold-product-table-head">Product</th>
+                        <th class="sold-product-table-head">Quantity Sold</th>
+                        <th class="sold-product-table-head" style="visibility:hidden">
+                            awdawd
+                        </th>
+                        <th class="sold-product-table-head">Price</th>
+                        <th class="sold-product-table-head"></th>
+                    </tr>
+                    {% for product in sold_products_obj.product.all %}
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data">
+    <!--                            <form action="{% url 'refund' product.id sold_products_obj.id" method="POST">-->
+    <!--                                {% csrf_token %}-->
+    <!--                                <input type="hidden" value="{{ product.id }}">-->
+    <!--                                <input type="hidden" value="{{ sold_products_obj.id }}">-->
+    <!--                                <button type="submit">{{ product.name }}</button>-->
+    <!--                            </form>-->
+                                {{ product.name }}
+                            </td>
+                            <td class="sold-product-table-data" style="text-align: center;">
+                                <span>{{ product.sold_quantity }}</span>
+                                <div>
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product-id" value="{{ product.id }}">
+                                        <input type="hidden"
+                                               name="sold-refunded-product-id"
+                                               value="{{ sold_products_obj.id }}">
+                                        <input value="{{ product.sold_quantity }}"
+                                               type="number"
+                                               name="refund-quantity"
+                                               class="refund-quantity-input-field">
+                                    </form>
+                                </div>
+                            </td>
+                            <td class="sold-product-table-data" style="text-align: center;">
+                                x
+                            </td>
+                            <td class="sold-product-table-data" style="text-align: center;">
+                                {{ product.price }}
+                            </td>
+                            <td class="sold-product-table-data">
+                                =
+                            </td>
+                            <td class="sold-product-table-data" style="text-align: center;">
+                                {{ product.multiply }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+    <!--                <tr class="sold-product-table-row">-->
+    <!--                    <td class="sold-product-table-data" colspan="3">ID: {{ sold_products_obj.id }}</td>-->
+    <!--                </tr>-->
+                    <tr class="sold-product-table-row">
+                        <td class="sold-product-table-data" colspan="3">Cash: {{ sold_products_obj.cash }}</td>
+                    </tr>
+                    <tr class="sold-product-table-row">
+                        <td class="sold-product-table-data" colspan="3">Change: {{ sold_products_obj.change }}</td>
+                    </tr>
+                    <tr class="sold-product-table-row">
+                        <td class="sold-product-table-data" colspan="3">
+                            Cashier: {{ sold_products_obj.cashier }}
+                        </td>
+                    </tr>
+                    <tr class="sold-product-table-row">
+                        <td class="sold-product-table-data" colspan="3">Date Sold: {{ sold_products_obj.date_sold_no_time }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Price</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right;">{{ sold_products_obj.total_price }}</td>
+                    </tr>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+    <script>
+        const refundQuantityInputField = document.querySelectorAll('.refund-quantity-input-field');
+
+        refundQuantityInputField.forEach((field, index) => {
+            const maxValue = parseInt(field.value);
+
+            field.addEventListener('input', ()=> {
+                let inputValue = parseInt(field.value);
+
+                if (maxValue < inputValue) {
+                    field.value = maxValue;
+                }
+            });
+        });
+    </script>
+{% endblock %}

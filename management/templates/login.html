@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="login-utmost-container-section">
+        <div id="login-form-container-div">
+            <div id="login-backend-messages-div">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <form id="login-form" method="post" action="{% url 'login' %}">
+                <div>
+                    <a href=""></a>
+                </div>
+                {% csrf_token %}
+                <div>
+                    <input class="login-input-field" type="text" name="username" placeholder="Username">
+                </div>
+                <div>
+                    <input class="login-input-field" type="password" name="password" placeholder="Password">
+                </div>
+                <div>
+                    <button id="login-btn" type="submit">Login</button>
+                </div>
+            </form>
+            <div id="login-register-account-div">
+                <a href="{% url 'registration-validation' %}">Create an Account</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

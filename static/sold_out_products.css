@@ -1,0 +1,29 @@
+.sold-out-products-heading-div{
+    text-align: center;
+    font-family: 'Montserrat';
+    text-transform: uppercase;
+    color: rgb(100, 100, 100);
+}
+
+.sold-out-products-table-container-div{
+    margin: auto;
+    width: 50%;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.sold-out-products-table{
+    font-family: 'Montserrat';
+}
+
+.sold-out-products-table-head{
+    background-color: rgb(30, 60, 60);
+    color: beige;
+    padding: 10px;
+}
+
+.sold-out-products-table-data{
+    background-color: rgb(100, 100, 100);
+    color: beige;
+    padding: 10px;
+}

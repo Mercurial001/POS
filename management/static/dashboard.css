@@ -1,0 +1,59 @@
+.graph-div{
+    display:inline-block;
+    background-color: rgb(220,220,220);
+    background-color: rgb(220,220,220);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius:3px;
+    margin-top:14px;
+    margin-left:14px;
+}
+
+.dashboard-graph-filter-div{
+    display: inline-block;
+}
+
+#dashboard-filter-form-container-div{
+    margin:auto;
+    width: fit-content;
+    background-color: rgba(20, 50, 50, 0.6);
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: rgba(50, 50, 150 0.7) 1px solid;
+}
+
+#dashboard-filters-filter-display-div{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Montserrat';
+}
+
+.dashboard-the-filter{
+    margin-right: 20px;
+    text-decoration: underline;
+}
+
+.dashboard-filter-applied-div{
+    font-weight: 800;
+    color: rgb(80, 80, 80);
+    margin-right: 20px;
+}
+
+.dashboard-filter-field-input{
+    padding: 5px;
+    border-radius: 5px;
+    border: rgb(9, 133, 118) solid 1px;
+}
+
+#dashboard-filter-btn{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: 'Montserrat';
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+}

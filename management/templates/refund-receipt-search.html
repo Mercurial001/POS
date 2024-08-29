@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="search-receipt-utmost-container-section">
+
+        <div class="search-receipt-search-form-div">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="search-receipt-message-block-div">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form class="search-receipt-form" method="POST">
+                {% csrf_token %}
+                <div class="search-form-element-div">
+                    <input type="number" name="receipt-id" class="refund-search-id-input-field"
+                           placeholder="Enter Receipt ID">
+                </div>
+                <div class="search-form-element-div">
+                    <button class="search-receipt-form-btn" type="submit">Go</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

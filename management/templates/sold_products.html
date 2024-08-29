@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="sold-products-utmost-container-div">
+        {% for products in sold_products %}
+            {% if not products.refunded %}
+                <div class="sold-product-instance-block-div">
+                    <table class="sold-product-table">
+                        <tr class="sold-product-table-row">
+                            <th class="sold-product-table-head">Product</th>
+                            <th class="sold-product-table-head">Quantity Sold</th>
+                            <th class="sold-product-table-head" style="visibility:hidden">
+                                awdawd
+                            </th>
+                            <th class="sold-product-table-head">Price</th>
+                            <th class="sold-product-table-head"></th>
+                        </tr>
+                        {% for product in products.product.all %}
+                            <tr class="sold-product-table-row">
+                                <td class="sold-product-table-data">
+                                    {{ product.name }}
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    {{ product.sold_quantity }}
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    x
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    {{ product.price }}
+                                </td>
+                                <td class="sold-product-table-data">
+                                    =
+                                </td>
+                                <td class="sold-product-table-data" style="text-align: center;">
+                                    {{ product.multiply }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">ID: {{ products.id }}</td>
+                        </tr>
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">Cash: {{ products.cash }}</td>
+                        </tr>
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">Change: {{ products.change }}</td>
+                        </tr>
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">
+                                Cashier: {{ products.cashier }}
+                            </td>
+                        </tr>
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">Date Sold: {{ products.date_sold_no_time }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Price</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: right;">{{ products.total_price }}</td>
+                        </tr>
+                    </table>
+                </div>
+            {% else %}
+                <div class="sold-product-instance-block-div">
+                    <div>
+                        Refunded
+                    </div>
+                    <table class="sold-product-table">
+                        <tr class="sold-product-table-row">
+                            <th class="sold-product-table-head">Product</th>
+                            <th class="sold-product-table-head">Quantity Sold</th>
+                            <th class="sold-product-table-head" style="visibility:hidden">
+                                awdawd
+                            </th>
+                            <th class="sold-product-table-head">Price</th>
+                            <th class="sold-product-table-head"></th>
+                        </tr>
+                        {% for product in products.product.all %}
+                            {% if product.refunded %}
+                                <tr class="sold-product-table-row">
+                                    <td class="sold-product-table-data">
+                                        {{ product.name }}
+                                    </td>
+                                    <td class="sold-product-table-data" style="text-align: center;">
+                                        <span style="text-decoration: line-through;">{{ product.refunded_quantity }}</span>
+                                        <span>{{ product.sold_quantity }}</span>
+                                    </td>
+                                    <td class="sold-product-table-data" style="text-align: center;">
+                                        x
+                                    </td>
+                                    <td class="sold-product-table-data" style="text-align: center;">
+                                        {{ product.price }}
+                                    </td>
+                                    <td class="sold-product-table-data">
+                                        =
+                                    </td>
+                                    <td class="sold-product-table-data" style="text-align: center;">
+                                        <span style="text-decoration: line-through;">{{ product.refunded_price }}</span>
+                                        <span>{{ product.multiply }}</span>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr class="sold-product-table-row">
+                                    <td class="sold-product-table-data">
+                                        {{ product.name }}
+                                    </td>
+                                    <td class="sold-product-table-data" style="text-align: center;">
+                                        <span>{{ product.sold_quantity }}</span>
+                                    </td>
+                                    <td class="sold-product-table-data" style="text-align: center;">
+                                        x
+                                    </td>
+                                    <td class="sold-product-table-data" style="text-align: center;">
+                                        {{ product.price }}
+                                    </td>
+                                    <td class="sold-product-table-data">
+                                        =
+                                    </td>
+                                    <td class="sold-product-table-data" style="text-align: center;">
+                                        {{ product.multiply }}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">ID: {{ products.id }}</td>
+                        </tr>
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">Cash: {{ products.cash }}</td>
+                        </tr>
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">
+                                Change:
+                                <span style="text-decoration: line-through;">{{ products.refunded_change }}</span>
+                                <span>{{ products.change }}</span>
+                            </td>
+                        </tr>
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">
+                                Cashier: {{ products.cashier }}
+                            </td>
+                        </tr>
+                        <tr class="sold-product-table-row">
+                            <td class="sold-product-table-data" colspan="3">Date Sold: {{ products.date_sold_no_time }}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Total Price</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: right;">
+                                <span style="text-decoration: line-through;">{{ products.refunded_total_price }}</span>
+                                <span>{{ products.total_price }}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,307 @@
+/* select_sell_products.html */
+
+.selected {
+    background-color: rgb(10, 40, 40);
+    color: beige;
+}
+
+.select-sell-products-container-section{
+    text-align: center;
+    float: right;
+    width: 47%;
+    min-height: 100vh;
+    margin-right: 30px;
+}
+
+.selected-sell-selected-products-list{
+    float: left;
+    position:fixed;
+    z-index: 1;
+}
+
+.select-sell-product-container-div{
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    vertical-align: top;
+
+}
+
+.awd{
+    display: inline-block;
+}
+
+.select-sell-products-type-container-div{
+    display: none;
+}
+
+.select-sell-product-container-div-show{
+    display: block;
+}
+
+#select-sell-product-container{
+    height: 250px;
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.select-sell-quantity-input{
+    width: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.select-sell-product-details-container-div{
+    text-align: left;
+
+}
+
+.select-sell-product-img-container-div{
+    text-align: center;
+}
+
+.select-sell-product-image{
+    height: 100px;
+    width: 150px;
+    border-radius: 5px;
+}
+
+.select-sell-product-no-img-div{
+    text-align: center;
+    margin:auto;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    width: 150px;
+    border-radius: 5px;
+    background-color: rgb(150, 150, 150);
+}
+
+.select-sell-product-no-img-div span{
+    font-family: Impact;
+    color: rgb(65, 65, 65);
+}
+
+.select-sell-product-name{
+    margin-bottom: 20px;
+}
+
+.select-sell-product-checkbox-input{
+    display: none
+}
+
+.select-sell-quantity-btn-span{
+    font-size: 30px;
+    border-radius: 50%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+}
+
+.select-sell-quantity-element{
+    display: inline-block;
+    vertical-align: top;
+    color: rgb(50, 50, 50);
+    font-family: 'Montserrat';
+    font-weight: 800;
+}
+
+.select-sell-quantity-btn{
+    background: none;
+    cursor: pointer;
+    font-weight: 800;
+    border: none;
+    color: rgb(80, 80, 80);
+    font-family: 'Montserrat';
+}
+
+#select-sell-subtract-quantity{
+    color: rgb(100, 20, 20);
+}
+
+#select-sell-add-quantity{
+    color: rgb(20, 100, 20);
+}
+
+.select-sell-product-quantity-input-container-div{
+    margin-top: 200px;
+    margin-left: 35px;
+    position: absolute;
+    font-family: 'Montserrat';
+    text-align: center;
+    display: none;
+}
+
+.select-sell-product-quantity-input-container-div-show{
+    display: block;
+}
+
+.select-sell-quantity-input:focus{
+    outline: none;
+}
+
+.select-sell-product-toggle-btn{
+    margin: 20px;
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    padding: 10px;
+}
+
+.select-sell-product-type-image{
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+.select-sell-selected-products-array-div{
+    display: none;
+    margin-left: 50px;
+}
+
+.select-sell-selected-products-array-div-show{
+    display: block;
+}
+
+.select-sell-product-select-product-btns-div{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.select-sell-form-operator-container-div{
+    position: fixed;
+    z-index: 10;
+    margin-top: -50px;
+    width: 400px;
+    margin-left: 60px;
+}
+
+.select-sell-submit-selected-btn-div{
+    display: none;
+}
+
+.select-sell-submit-selected-btn-div-show{
+    display: block;
+}
+
+.select-sell-select-more-products-div{
+    display: none;
+    cursor: pointer;
+    font-family: 'Montserrat';
+    border: 1px solid rgb(10, 40, 40);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-radius: 5px;
+    background-color: rgb(40, 80, 80);
+    border: none;
+    font-weight: 800;
+    color: beige;
+    font-size: 13px;
+}
+
+.select-sell-select-more-products-div-show{
+    display: block;
+}
+
+.selected-sell-product-div1{
+    position: absolute;
+}
+
+#select-sell-remove-selected-product-btn{
+    background: none;
+    border:none;
+    font-family: 'Montserrat';
+    font-weight: 800;
+    color: rgb(40, 40, 40);
+    cursor: pointer;
+}
+
+.selectedProductNames{
+    display: inline;
+}
+
+.select-sell-products-toggle-btn-container-div{
+    margin-top: 60px;
+}
+
+.select-sell-products-type-container-div{
+    margin-top: 60px;
+}
+
+#selected-product-select-sell{
+    margin-top:5px;
+}
+
+#submit-selected-btn{
+    background-color: rgb(40, 80, 80);
+    color: beige;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    font-family: 'Montserrat';
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+}
+
+#selectedProductNames{
+    margin-top:10px;
+    border-radius: 10px;
+    text-align: left;
+    font-family: 'Montserrat';
+    max-height: 100px;
+    width: 380px;
+    overflow-y: scroll;
+    background-color: rgb(230, 230, 230);
+    padding-left: 20px;
+}
+
+.selected-sell-cash-form{
+    margin-top: 350px;
+    text-align: center;
+}
+
+#select-sell-sell-products-btn{
+    margin: auto;
+    width: 100%;
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 40px;
+    font-family: 'Montserrat';
+    cursor: pointer;
+    background-color: rgb(100, 150, 150);
+    border: 1px solid rgb(80, 130, 130);
+    border-radius: 4px;
+    color: beige;
+}
+
+.select-sell-cash-input-field{
+    width: 100%;
+    border-radius: 4px;
+    height: 20px;
+    border: 1px solid rgb(100, 100, 100);
+    padding: 10px;
+}
+
+.select-sell-cash-input-field:focus{
+    outline: none;
+}
+
+/*
+.selected-sell-clear-change-div{
+    width: 50%;
+}*/

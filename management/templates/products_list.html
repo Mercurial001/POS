@@ -1,0 +1,219 @@
+<section class="selected-sell-selected-products-list">
+    <div class="scanned-products-table-container-div">
+        {% for products in scanned_products %}
+            <div class="scanned-products-total-price-container-div" id="scanned-products-total-price-container-div">
+                {{ products.summed_product_price }}
+            </div>
+        {% endfor %}
+        <div class="table">
+            <table>
+               {% for products in scanned_products %}
+                    <tr class="scanned-products-table-row">
+                        <th class="scanned-products-table-head" id="scanned-products-table-head-name">
+                            Name
+                        </th>
+                        <th class="scanned-products-table-head" id="scanned-products-table-head-quantity">
+                            Quantity
+                        </th>
+                        <th class="scanned-products-table-head" id="scanned-products-table-head-price">
+                            Price
+                        </th>
+                    </tr>
+                    {% for product in products.product.all %}
+                        <tr class="scanned-products-table-row">
+                            <td class="scanned-products-table-data" id="scanned-products-table-data-name">
+                                <form hx-trigger="htmx:afterSwap">
+                                    {% csrf_token %}
+                                    <button hx-post="{% url 'remove-product' request.user product.barcode %}"
+                                            hx-target=".selected-sell-selected-products-lists"
+                                            hx-select=".selected-sell-selected-products-lists"
+                                            hx-swap="innerHTML"
+                                            hx-trigger="click"
+                                            id="select-sell-remove-selected-product-btn">
+                                        {{ product.name }}
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="scanned-products-table-data" id="scanned-products-table-data-quantity">
+                                <div class="select-sell-quantity-element">
+                                    {% if product.scanned_quantity > 1 %}
+                                        <form hx-trigger="htmx:afterSwap">
+                                            {% csrf_token %}
+                                            <div>
+                                                <button hx-post="{% url 'subtract-quantity' request.user product.barcode %}"
+                                                        hx-target=".selected-sell-selected-products-lists"
+                                                        hx-select=".selected-sell-selected-products-lists"
+                                                        hx-swap="innerHTML"
+                                                        id="select-sell-subtract-quantity"
+                                                        class="select-sell-quantity-btn">
+                                                    -
+                                                </button>
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                                <div class="select-sell-quantity-element">
+                                    {{ product.scanned_quantity }}
+                                </div>
+                                <div class="select-sell-quantity-element">
+                                    {% if not product.quantity <= 0 %}
+                                        <form hx-trigger="htmx:afterSwap">
+                                            {% csrf_token %}
+                                            <div>
+                                                <button hx-post="{% url 'add-quantity' request.user product.barcode %}"
+                                                        hx-target=".selected-sell-selected-products-lists"
+                                                        hx-select=".selected-sell-selected-products-lists"
+                                                        hx-swap="innerHTML"
+                                                        id="select-sell-add-quantity"
+                                                        class="select-sell-quantity-btn">
+                                                    +
+                                                </button>
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="scanned-products-table-data" id="scanned-products-table-data-price">
+                                {{ product.multiply }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+            <div class="loading-spinner-product-list-container-div">
+                <div class="loading-spinner-product-list"></div>
+            </div>
+        </div>
+    </div>
+    <div class="scanned-sell-clear-change-div">
+        {% include 'clear_change.html' %}
+        <div class="selected-sell-cash-form">
+            {% if not scanned_sum == 0 %}
+            <form action="{% url 'sell-scanned-products' request.user " hx-trigger="htmx:afterSwap">
+                {% csrf_token %}
+                <div>
+                    <input type="number"
+                           name="cash"
+                           id="customer-cash"
+                           placeholder="Cash"
+                           required
+                           class="select-sell-cash-input-field"
+                    >
+                </div>
+                <div>
+                    <button hx-post="{% url 'sell-scanned-products' request.user %}"
+                            hx-target=".selected-sell-selected-products-lists"
+                            hx-select=".selected-sell-selected-products-lists"
+                            hx-indicator=".loading-spinner"
+                            hx-swap="innerHTML" id="select-sell-sell-products-btn">
+                        Sell
+                        <span class="loading-spinner"></span>
+                    </button>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<section class="select-sell-products-container-section">
+    <form method="post" id="productForm">
+        {% csrf_token %}
+        <div class="select-sell-form-operator-container-div">
+            <div class="select-sell-product-select-product-btns-div">
+                <div class="select-sell-select-more-products-div">
+                    <span>Select More Products</span>
+                </div>
+            </div>
+            <div class="select-sell-product-select-product-btns-div">
+                <div class="select-sell-submit-selected-btn-div">
+                    <button type="submit" id="submit-selected-btn"
+                            hx-post="{% url 'select-sell' request.user %}"
+                            hx-target=".selected-sell-selected-products-lists"
+                            hx-select=".selected-sell-selected-products-lists"
+                            hx-indicator=".loading-spinner-product-list"
+                            hx-swap="outerHTML">
+                        Submit Selected</button>
+                </div>
+            </div>
+        </div>
+        <div class="select-sell-products-toggle-btn-container-div">
+            <div class="select-sell-selected-products-array-div">
+                <div id="selectedProductNames"></div>
+            </div>
+            {% for type, products in product_types_list.items %}
+                <div class="select-sell-product-toggle-btn"
+                        id="select-sell-product-toggle-div{{ type.id }}">
+                    <div>
+                        {% if type.image %}
+                            <img class="select-sell-product-type-image" src="{{ type.image.url }}">
+                        {% else %}
+                            <div class="select-sell-product-no-img-div">
+                                <span>No Image</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    {{ type.product_type }}
+                </div>
+            {% empty %}
+                No Products
+            {% endfor %}
+        </div>
+        {% for type, products in product_types_list.items %}
+            <div class="select-sell-products-type-container-div" id="select-sell-product-container-div{{ type.id }}">
+                {% for product in products %}
+                    <div class="select-sell-product-container-div">
+                        <div class="select-sell-product-quantity-input-container-div"
+                             id="selected-sell-product-div{{ product.id }}">
+                            <div id="scanned-products-quantity-label{{ product.id }}">Quantity:</div>
+                            <span onclick="decrementQuantity({{ product.id }})"
+                                  class="select-sell-quantity-btn-span"
+                                  id="select-sel-minus-quantity{{ product.id }}"
+                                  style="background-color: rgb(100, 25, 25);">
+                                -
+                            </span>
+                            <input class="select-sell-quantity-input"
+                                   id="scanned-products-form{{ product.id }}"
+                                   type="number"
+                                   name="product-quantity"
+                                   max="{{ product.quantity }}"
+                                   oninput="validateQuantity(this)"
+                            >
+                            <span onclick="incrementQuantity({{ product.id }})"
+                                  class="select-sell-quantity-btn-span"
+                                  id="select-sel-add-quantity{{ product.id }}"
+                                  style="background-color: rgb(25, 100, 25);">
+                                +
+                            </span>
+                        </div>
+                        <div onclick="toggleSelection(this, '{{ product.name }}')" id="select-sell-product-container"
+                             class="{% if product.isSelected %}selected{% endif %}">
+                            <input class="select-sell-product-checkbox-input" type="checkbox"
+                                   name="selectedProducts" value="{{ product.id }}">
+                            <div class="select-sell-product-details-container-div">
+                                {% if product.image %}
+                                    <div class="select-sell-product-img-container-div">
+                                        <img class="select-sell-product-image" src="{{ product.image.url }} ">
+                                    </div>
+                                {% else %}
+                                    <div class="select-sell-product-no-img-div">
+                                        <span>No Image</span>
+                                    </div>
+                                {% endif %}
+                                <div class="select-sell-product-name">
+                                    {{ product.name }}
+                                </div>
+                                <div class="select-sell-product-price">
+                                    Price: {{ product.price }}
+                                </div>
+                                <div id="select-sell-product-quantity-stock"
+                                     class="select-sell-product-quantity-stock">
+                                    Stock: {{ product.quantity }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </form>
+</section>

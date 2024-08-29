@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="income-page-utmost-container-section">
+        <div class="income-page-filter-form-div">
+            <form method="GET">
+                <div class="dashboard-graph-filter-div">
+                    <input class="dashboard-filter-field-input"
+                           type="month"
+                           id="monthPicker"
+                           name="income-page-selected-date"
+                           value="{{ default_date|date:'Y-m' }}">
+                </div>
+                <div class="dashboard-graph-filter-div">
+                    <button id="dashboard-filter-btn" type="submit">
+                        Filter
+                        <i class="fa fa-filter"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        {% if not selected_date %}
+            <div class="income-page-download-spreadsheet-div">
+                <a class="income-page-download-spreadsheet" href="{% url 'income-excel' %}">Download Spreadsheet</a>
+            </div>
+            <div class="income-page-table-container-div">
+                <div class="income-page-total-income-div">
+                    Total Income: {{ total_income }}
+                </div>
+                <table class="income-page-table">
+                    <tr class="income-page-table-row">
+                        <th class="income-page-table-head">Amount</th>
+                        <th class="income-page-table-head">Date</th>
+                    </tr>
+                    {% for income in incomes %}
+                        <tr class="income-page-table-row">
+                            <td class="income-page-table-data">
+                                {{ income.income }}
+                            </td>
+                            <td class="income-page-table-data">
+                                {{ income.date }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            {% if filtered_income %}
+                <div class="income-page-download-filtered-spreadsheet-div">
+                    <a id="income-page-download-spreadsheet-filtered"
+                       href="{% url 'income-spreadsheet-filtered' %}?income-page-selected-date={{ selected_date.year }}-{{ selected_date.month }}">
+                        Download Spreadsheet for {{ selected_date }}
+                    </a>
+                </div>
+                <div class="income-page-table-container-div">
+                    <div class="income-page-total-income-div">
+                        Total Income for {{ selected_date }}:     {{ filtered_income_sum }}
+                    </div>
+                    <table class="income-page-table">
+                        <tr class="income-page-table-row">
+                            <th class="income-page-table-head">Amount</th>
+                            <th class="income-page-table-head">Date</th>
+                        </tr>
+                        {% for income in filtered_income %}
+                            <tr class="income-page-table-row">
+                                <td class="income-page-table-data">
+                                    {{ income.income }}
+                                </td>
+                                <td class="income-page-table-data">
+                                    {{ income.date }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+            {% else %}
+                <div class="income-page-no-data-notifier-div">
+                    No Income for {{ selected_date }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </section>
+{% endblock %}

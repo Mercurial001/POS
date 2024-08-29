@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="registration-validation-utmost-container-section">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="registration-validation-form-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form class="registration-validation-form" method="post">
+            <div class="registration-validation-registration-validation-form-header-title">
+                Registration
+            </div>
+            {% csrf_token %}
+            <div class="registration-validation-form-input-field-div">
+                {{ form.username }}
+            </div>
+            <div class="registration-validation-form-input-field-div">
+                {{ form.email }}
+            </div>
+            <div class="registration-validation-form-input-field-div">
+                {{ form.password1 }}
+            </div>
+            <div class="registration-validation-form-input-field-div">
+                {{ form.password2 }}
+            </div>
+            <div class="registration-validation-form-input-field-div">
+                <div class="registration-validation-form-input-label-div">
+                    Group
+                </div>
+                {{ form.group }}
+            </div>
+            <button class="registration-validation-form-btn" type="submit">
+                Submit
+            </button>
+        </form>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="products-container-section">
+        {% csrf_token %}
+        <div class="products-form-operator-container-div">
+            <div class="products-product-select-product-btns-div">
+                <div class="products-select-more-products-div">
+                    <span>Browse Other Products</span>
+                </div>
+            </div>
+            <div class="products-product-select-product-btns-div">
+                <div class="products-submit-selected-btn-div">
+                    <button type="submit" id="submit-selected-btn"
+                            hx-post="{% url 'select-sell' request.user %}"
+                            hx-target=".selected-sell-selected-products-lists"
+                            hx-select=".selected-sell-selected-products-lists"
+                            hx-indicator=".loading-spinner-product-list"
+                            hx-swap="innerHTML">
+                        Submit Selected</button>
+                </div>
+                <div class="products-selected-products-array-div">
+                    <div id="selectedProductNames"></div>
+                </div>
+            </div>
+        </div>
+        <div class="products-toggle-btn-container-div">
+            {% for type, products in product_types_list.items %}
+                <div class="products-product-toggle-btn"
+                        id="products-product-toggle-div{{ type.id }}">
+                    <div>
+                        {% if type.image %}
+                            <img class="products-product-type-image" src="{{ type.image.url }}">
+                        {% else %}
+                            <div class="products-product-no-img-div">
+                                <span>No Image</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    {{ type.product_type }}
+                </div>
+            {% empty %}
+                No Products
+            {% endfor %}
+        </div>
+        {% for type, products in product_types_list.items %}
+            <div class="products-type-container-div" id="products-product-container-div{{ type.id }}">
+                {% for product in products %}
+                    <div class="products-product-container-div">
+                        <a class="products-link-to-product-profile" href="{% url 'product-info' product.id %}">
+                            <div id="products-product-container" class="{% if product.isSelected %}selected{% endif %}">
+                                <div class="products-product-details-container-div">
+                                    {% if product.image %}
+                                        <div class="products-product-img-container-div">
+                                            <img class="products-product-image" src="{{ product.image.url }} ">
+                                        </div>
+                                    {% else %}
+                                        <div class="products-product-no-img-div">
+                                            <span>No Image</span>
+                                        </div>
+                                    {% endif %}
+                                    <div class="products-product-name">
+                                        {{ product.name }}
+                                    </div>
+                                    <div class="products-product-price">
+                                        Price: {{ product.price }}
+                                    </div>
+                                    <div id="products-product-quantity-stock"
+                                         class="products-product-quantity-stock">
+                                        Stock: {{ product.quantity }}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </section>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            ToggleProductProductType()
+        });
+
+        function ToggleProductProductType() {
+            const toggleProductTypeBtn = document.querySelectorAll('.products-product-toggle-btn')
+
+            toggleProductTypeBtn.forEach(function(button) {
+                button.addEventListener('click', ()=> {
+                    const typeId = button.id.replace('products-product-toggle-div', '');
+                    const productContainerDiv = document.getElementById(`products-product-container-div${typeId}`);
+                    const submitSelectedBtn = document.querySelector('.products-submit-selected-btn-div');
+                    const toggleBtnsContainer = document.querySelector('.products-toggle-btn-container-div');
+                    const selectProductBtn = document.querySelector('.products-select-more-products-div');
+                    const selectedProductNamesDiv = document.querySelector('.products-selected-products-array-div');
+
+                        // select-sell-products-toggle-btn-container-div
+                        // select-sell-selected-products-array-div
+                    productContainerDiv.classList.toggle('products-product-container-div-show');
+
+                    if (productContainerDiv.classList.contains("products-product-container-div-show")) {
+                        toggleBtnsContainer.style.display = 'none';
+                        selectedProductNamesDiv.style.display = 'none';
+                        selectProductBtn.classList.add('products-select-more-products-div-show');
+                    } else {
+                        toggleBtnsContainer.style.display = 'block';
+                        selectProductBtn.classList.remove('products-select-more-products-div-show');
+                    };
+
+                    selectProductBtn.addEventListener('click', ()=> {
+                        const toggleContainer = document.querySelector('.products-toggle-btn-container-div');
+                        productContainerDiv.classList.remove('products-product-container-div-show');
+                        toggleContainer.style.display = 'block';
+                        selectedProductNamesDiv.style.display = 'block';
+                        selectProductBtn.classList.remove('products-select-more-products-div-show');
+                    });
+
+                    toggleProductTypeBtn.forEach(function(otherBtn) {
+                        if (otherBtn !== button) {
+                            const otherBtnId = otherBtn.id.replace('select-sell-product-toggle-div', '');
+                            const otherProductContainerDiv = document.getElementById(`select-sell-product-container-div${otherBtnId}`);
+                            otherProductContainerDiv.classList.remove('select-sell-product-container-div-show');
+                        };
+                    });
+                });
+            });
+        };
+    </script>
+{% endblock %}

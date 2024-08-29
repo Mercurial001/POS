@@ -1,0 +1,25 @@
+@media only screen and (min-width: 725px){
+    .select-sell-sell-form-section{
+        float: left;
+        position:fixed;
+        padding: 5px;
+        width: 300px;
+        margin-top: 450px;
+        margin-left: 120px;
+        border-radius: 5px;
+        text-align: center;
+    }
+}
+@media only screen and (max-width: 725px){
+    .select-sell-sell-form-section{
+        float: left;
+        position:fixed;
+        padding: 5px;
+        width: 305550px;
+        margin-top: 500px;
+        margin-left: 120px;
+        border-radius: 5px;
+        text-align: center;
+        color: blue;
+    }
+}

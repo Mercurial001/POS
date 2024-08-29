@@ -1,0 +1,92 @@
+.expenses-page-filter-form-container-div{
+    text-align: center;
+    margin: 20px;
+    margin-bottom: 20px;
+}
+
+.expenses-page-download-spreadsheet-div{
+    text-align: center;
+    margin: 40px;
+}
+
+.expenses-page-download-spreadsheet{
+    text-decoration: none;
+    margin: 15px;
+    background-color: rgba(10, 40, 40, 0.7);
+    color: beige;
+    border: 1px solid rgb(150, 200, 200);
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.expenses-page-table-container-div{
+    margin:auto;
+    width: 50%;
+}
+
+.expenses-page-table{
+    font-family: 'Montserrat';
+}
+
+.expenses-page-table-head{
+    width: 400px;
+    background-color: rgb(10, 40, 40);
+    color: beige;
+    font-family: 'Montserrat';
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.expenses-page-table-data{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgb(80, 130, 130);
+    color: beige;
+}
+
+.expenses-page-expense-configuration-link{
+    text-decoration: none;
+    color: beige;
+}
+
+.expenses-page-download-spreadsheet-filtered-div{
+    margin: 40px;
+    text-align: center;
+}
+
+.expenses-page-expenses-detail-link{
+    text-decoration: none;
+    color: beige;
+}
+
+.expenses-page-filtered-message-div{
+    text-align: center;
+    font-family: 'Montserrat';
+    margin: 40px;
+}
+
+.expense-page-no-data-filtered-notification-div{
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    background-color: rgb(100, 130, 130);
+    color: beige;
+    font-family: 'Montserrat';
+    font-weight: 800;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    border-radius: 10px;
+    font-size: 40px;
+}
+
+.expenses-page-total-expense-div{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-family: 'Montserrat';
+    text-align: left;
+}

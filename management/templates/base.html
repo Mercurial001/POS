@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% load humanize %}
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'clear_change_htmx.css' %}">
+    <link rel="stylesheet" href="{% static 'products.css' %}">
+    <link rel="stylesheet" href="{% static 'product-profile.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'reports.css' %}">
+    <link rel="stylesheet" href="{% static 'sold_out_products.css' %}">
+    <link rel="stylesheet" href="{% static 'inventory.css' %}">
+    <link rel="stylesheet" href="{% static 'authentication.css' %}">
+    <link rel="stylesheet" href="{% static 'register.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'expense_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'revenue_page.css' %}">
+    <link rel="stylesheet" href="{% static 'income_page.css' %}">
+    <link rel="stylesheet" href="{% static 'expenses_page.css' %}">
+    <link rel="stylesheet" href="{% static 'select_sell.css' %}">
+    <link rel="stylesheet" href="{% static 'select_sell_responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'add_expense.css' %}">
+    <link rel="stylesheet" href="{% static 'product_type.css' %}">
+    <link rel="stylesheet" href="{% static 'registration-validation.css' %}">
+    <link rel="stylesheet" href="{% static 'registrants.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sold-products.css' %}">
+    <link rel="stylesheet" href="{% static 'scanned-products.css' %}">
+    <link rel="stylesheet" href="{% static 'refund-receipt-search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
+<!--    <link href='https://fonts.googleapis.com/css?family=Lato:100italic' rel='stylesheet' type='text/css'>-->
+<!--    <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>-->
+    <!--<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
+    <link rel="stylesheet" href="{% static 'webfonts/fonts.css' %}">
+    <script src="{% static 'jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'htmx.js' %}"></script>
+    <script src="{% static 'autogrow.js' %}"></script>
+</head>
+<body>
+    {% if not device.expired %}
+    <header id="main-header">
+        {% if request.user.is_authenticated and request.user.is_superuser %}
+        <div class="main-header-link-container-div" id="notification-toggle">
+            <i style="float: left; margin-right: 5px;" class="fa fa-bell"></i>
+            <div class="notification-counter-div">
+
+            </div>
+            Notification
+        </div>
+        {% csrf_token %}
+        <div class="notification-list" id="notification-list">
+            {% for notification in notifications %}
+                <div class="notification">
+                    <div class="notification-title">
+                        {{ notification.title }}
+                    </div>
+                    <div class="notification-date-time">
+                        {{ notification.date_time | naturaltime }}
+                    </div>
+                    <div class="notification-message">
+                        {{ notification.message }}
+                    </div>
+                    <div class="notification-delete-div">
+                        <a class="notification-delete"
+                           href="{% url 'delete-notification' notification.title notification.id %}">
+                            Remove Notification
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="notification-empty-notifier">
+                    No Notification
+                </div>
+            {% endfor %}
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'homepage' %}"><i class="fa fa-cart-arrow-down"></i> Inventory</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'dashboard' %}"><i class="fa fa-area-chart"></i> Dashboard</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'scanned-products' request.user %}"><i class="fas fa-barcode"></i> Scan Items</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'select-sell' request.user %}"><i class="fa fa-check-square"></i> Select Products</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'reports' %}"><i class="fa fa-book"></i> Reports</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'products' %}"><i class="fa-solid fa-box"></i> Products</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'product-types' %}"><i class="fas fa-boxes"></i> Product Types</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'add-expense' %}"><i class="fa fa-calculator"></i> Add Expenses</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'refund-search' %}"><i class="fa-solid fa-hand-holding-dollar"></i> Refund</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'registrant-validation' %}"><i class="fas fa-users"></i> Registrants</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
+        {% elif not request.user.is_authenticated %}
+        <div class="main-header-link-container-div">
+            <a href="{% url 'logout' %}"><i class="fa fa-sign-in"></i> Login</a>
+        </div>
+        {% elif user_belongs_to_encoder %}
+        <div class="main-header-link-container-div">
+            <a href="{% url 'homepage' %}"><i class="fa fa-cart-arrow-down"></i> Inventory</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'products' %}"><i class="fa fa-cart-plus"></i> Products</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'add-expense' %}"><i class="fa fa-calculator"></i> Add Expenses</a>
+        </div>
+        <div class="main-header-link-container-div" id="notification-toggle">
+            <div class="notification-counter-div">
+
+            </div>
+            Notification
+        </div>
+        {% csrf_token %}
+        <div class="notification-list" id="notification-list">
+            {% for notification in notifications %}
+                <div class="notification">
+                    <div class="notification-title">
+                        {{ notification.title }}
+                    </div>
+                    <div class="notification-date-time">
+                        {{ notification.date_time | naturaltime }}
+                    </div>
+                    <div class="notification-message">
+                        {{ notification.message }}
+                    </div>
+                    <div class="notification-delete-div">
+                        <a class="notification-delete"
+                           href="{% url 'delete-notification' notification.title notification.id %}">
+                            Remove Notification
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="notification-empty-notifier">
+                    No Notification
+                </div>
+            {% endfor %}
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Logout</a>
+        </div>
+        {% endif %}
+    </header>
+    <div class="username" id="username{{ request.user }}"></div>
+    <div class="base-block-content-container-div">
+
+        {% block content %}
+            <div class="inventory-forms-container-div">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="inventory-messages-container-div">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="inventory-add-product-type-form-container-div">
+                    <form class="inventory-add-product-type-form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="inventory-add-product-type-form-field-div">
+                            {{ product_type_form.as_p }}
+                        </div>
+                        <div class="add-product-type-btn-container">
+                            <button class="inventory-btn" name="add-new-product-type-btn" type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="inventory-form-container-div">
+                    <div class="inventory-form-title-header-div">
+                        Add Product
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="inventory-field-container-div">
+                            {{ product_form.name }}
+                        </div>
+                        <div class="inventory-field-container-div">
+                            <div class="inventory-input-field-name">
+                                Product Type
+                            </div>
+                            <div class="inventory-field-container-div">
+                                {{ product_form.type }}
+                            </div>
+                        </div>
+                        <div class="inventory-field-container-div">
+                            {{ product_form.price }}
+                        </div>
+                        <div class="inventory-field-container-div">
+                            <div class="inventory-input-field-name">
+                                Expiry Date
+                            </div>
+                            <div class="inventory-field-container-div">
+                                {{ product_form.expiry_date }}
+                            </div>
+                        </div>
+                        <div class="inventory-field-container-div">
+                            {{ product_form.quantity }}
+                        </div>
+                        <div class="inventory-field-container-div">
+                            <div class="inventory-input-field-name">
+                                Product Image
+                            </div>
+                            <div class="inventory-field-container-div">
+                                {{ product_form.image }}
+                            </div>
+                        </div>
+                        <div class="inventory-field-container-div">
+                            {{ product_form.barcode }}
+                        </div>
+                        <div class="add-product-type-btn-container">
+                            <button class="inventory-btn" name="add-new-product-btn" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        {% endblock %}
+    </div>
+    {% else %}
+    <div>
+        Your Subscription has expired
+    </div>
+    {% endif %}
+    <script>
+        autosize(document.querySelectorAll('.auto-growth'));
+    </script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const notificationToggle = document.querySelector('#notification-toggle');
+            const notificationList = document.querySelector('.notification-list');
+
+            notificationToggle.addEventListener('click', () =>{
+                notificationList.classList.toggle('notification-list-show');
+                console.log('works');
+
+                fetch('/seen-notifications/')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Notifications marked as seen:', data);
+                        // You can perform additional actions based on the response if needed
+                    })
+                    .catch(error => console.error('Error marking notifications as seen:', error));
+                    });
+        });
+
+        $(document).on('click', '.notification-delete', function() {
+            // Get notification details from the data attributes
+            var title = $(this).data('title');
+            var id = $(this).data('id');
+            var deleteUrl = '/delete-notification/' + title + '/' + id + '/';
+
+            // Make an AJAX request to remove the notification
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                data: {title: title, id: id, csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val() },
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response.message);
+                    // Remove the notification from the UI if removal is successful
+                    $(this).closest('.notification').remove();
+                },
+                error: function(error) {
+                    console.error('Failed to remove notification', error);
+                }
+            });
+        });
+
+        setInterval(function() {
+            $.ajax({
+                url: '{% url "expired-products-json" %}',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    var expiredProducts = response.expired_products;
+                    var expiringProducts = response.expiring_products;
+                    var notifications = response.notification;
+                    $('.notification-counter-div').empty();
+
+                    $('#notification-list').empty();
+
+                    if (notifications.length === 0) {
+                        var emptyNotifier =
+                        `
+                            <div class="notification-empty-notifier">
+                                No Notification
+                            </div>
+                        `;
+                        $('#notification-list').html(emptyNotifier);
+                    } else {
+                        for (var i = 0; i < notifications.length; i++) {
+                            var notification = notifications[i];
+                            var notificationCounter =
+                            `
+                                <div class="notification-counter">
+                                    ${notification.unseen}
+                                </div>
+                            `;
+                            var notificationHtml =
+                            `
+                                <div class="notification">
+                                    <div class="notification-title">
+                                        ${notification.title}
+                                    </div>
+                                    <div class="notification-date-time">
+                                        ${notification.time}
+                                    </div>
+                                    <div class="notification-message">
+                                        ${notification.message}
+                                    </div>
+                                    <div class="notification-delete-div">
+                                        <a class="notification-delete" data-title="${notification.title}" data-id="${notification.id}">
+                                            Remove Notification
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                            if (notification.unseen !== null) {
+                                $('.notification-counter-div').append(notificationCounter)
+                            } else {
+                                $('.notification-counter-div').empty();
+                            };
+                            $('#notification-list').append(notificationHtml);
+                        }
+                    }
+                }
+            });
+        }, 1000);
+    </script>
+</body>
+</html>
+
+
+<!--                    // Update the div with the new products-->
+<!--                    for (var i = 0; i < expiredProducts.length; i++) {-->
+<!--                        var product = expiredProducts[i];-->
+<!--                        var expiredProductHtml = '<p>' + product.name + '</p>';-->
+<!--                        $('#notification-list').append(expiredProductHtml);-->
+<!--                    }-->
+<!--                    for (var i = 0; i < expiringProducts.length; i++) {-->
+<!--                        var product = expiringProductss[i];-->
+<!--                        var expiringProductHtml = '<p>' + product.name + '</p>';-->
+<!--                        $('#notification-list').append(expiringProductHtml);-->
+<!--                    }-->
+
+
+<!--        setInterval(function() {-->
+<!--            $.ajax({-->
+<!--                url: '{% url "expired-products-json" %}',-->
+<!--                type: 'GET',-->
+<!--                dataType: 'json',-->
+<!--                success: function(response) {-->
+<!--                    var expiredProducts = response.expired_products;-->
+<!--                    var expiringProducts = response.expiring_products-->
+<!--                    // Clear the existing content of the div-->
+<!--                    $('#notification-list').empty();-->
+<!--                    // Update the div with the new products-->
+<!--                    for (var i = 0; i < expiredProducts.length; i++) {-->
+<!--                        var product = products[i];-->
+<!--                        var expiredProductHtml = '<p>' + 'Expired Products' + product.name + '</p>';-->
+
+<!--                        $('#notification-list').append(expiredProductHtml);-->
+<!--                    }-->
+
+<!--                    for (var i = 0; i < expiringProducts.length; i++) {-->
+<!--                        var product = products[i];-->
+<!--                        var expiredProductHtml = '<p>' + 'Products Nearing Expiration' + product.name + '</p>';-->
+
+<!--                        $('#notification-list').append(expiredProductHtml);-->
+<!--                    }-->
+<!--                }-->
+<!--            });-->
+<!--        }, 5000);-->

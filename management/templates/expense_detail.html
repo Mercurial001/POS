@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div id="expense-detail-container-div">
+        <div id="expense-detail-expense-header-div">
+            {{ expense.date_no_time }}
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div id="expense-detail-details-container-div">
+                <div class="expense-detail-data-and-field-container-div">
+                    <div>
+                        <div id="expense-detail-expense-amount-label">
+                            Expense Amount:
+                        </div>
+                        <div class="expense-detail-toggle-edit-btn">
+                            <i class="fa fa-edit"></i>
+                        </div>
+                    </div>
+                    <div class="expense-detail-expense-data-and-field-container-div">
+                        <div class="expense-detail-data-div" id="expense-detail-expense-amount-div">
+                            {{ expense.expense }}
+                        </div>
+                        <div class="expense-detail-form-field-div">
+                            {{ expense_form.expense }}
+                        </div>
+                    </div>
+                </div>
+                <div class="expense-detail-line-divider"></div>
+                <div class="expense-detail-data-and-field-container-div">
+                    <div>
+                        <div id="expense-detail-expense-description-label-div">
+                            Description:
+                        </div>
+                        <div class="expense-detail-toggle-edit-btn">
+                            <i class="fa fa-edit"></i>
+                        </div>
+                    </div>
+                    <div class="expense-detail-expense-data-and-field-container-div">
+                        <div class="expense-detail-data-div" id="expense-detail-description-container-div">
+                            {{ expense.description }}
+                        </div>
+                        <div class="expense-detail-form-field-div">
+                            {{ expense_form.description }}
+                        </div>
+                    </div>
+                </div>
+                <div class="expense-detail-line-divider"></div>
+                <div class="expense-detail-data-and-field-container-div">
+                    <div>
+                        <div id="expense-detail-expense-image-label-div">
+                            Expense Image Document:
+                        </div>
+                        <div class="expense-detail-toggle-edit-btn">
+                            <i class="fa fa-edit"></i>
+                        </div>
+                    </div>
+                    <div class="expense-detail-expense-data-and-field-container-div">
+                        <div class="expense-detail-data-div">
+                            {% if expense.image %}
+                                <div>
+                                    <img id="product-profile-product-img" src="{{ expense.image.url }} ">
+                                </div>
+                            {% else %}
+                                <div>
+                                    No Image Attached
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="expense-detail-form-field-div">
+                            {{ expense_form.image }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="expense-detail-submit-btn-div">
+                <button id="expense-detail-submit-btn" type="submit">Save Changes</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var editButtons = document.querySelectorAll('.expense-detail-toggle-edit-btn');
+
+            editButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    // Find the parent element with the class "expense-detail-expense-data-and-field-container-div"
+                    var expenseDataAndFieldDiv = button.closest('.expense-detail-data-and-field-container-div');
+
+                    var expenseDataDiv = expenseDataAndFieldDiv.querySelector('.expense-detail-data-div');
+                    var expenseFieldDiv = expenseDataAndFieldDiv.querySelector('.expense-detail-form-field-div');
+
+                    expenseDataDiv.classList.toggle('hidden');
+                    expenseFieldDiv.classList.toggle('show-display-field');
+
+                });
+            });
+        });
+    </script>
+{% endblock %}

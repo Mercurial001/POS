@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Expiry Date Config</title>
+    <link rel="stylesheet" href="{% static 'expiry-date-conf.css' %}">
+</head>
+<body>
+    <section class="expiry-date-conf-utmost-container-section">
+        <form class="expiry-date-conf-form" method="POST">
+            {% csrf_token %}
+            <input class="expiry-date-conf-form-field-input" name='expiry-date' type="date">
+            <button class="expiry-date-conf-form-btn" type="submit">Set</button>
+        </form>
+    </section>
+</body>
+</html>

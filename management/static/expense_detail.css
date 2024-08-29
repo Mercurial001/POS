@@ -1,0 +1,103 @@
+#expense-detail-container-div{
+    margin:auto;
+    width: 40%;
+    border-radius: 10px;
+    background-color: rgb(210, 210, 210);
+    font-family: 'Montserrat';
+    margin-top: 100px;
+}
+
+#expense-detail-expense-header-div{
+    background-color: rgb(10, 40, 40);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px;
+    color: beige;
+}
+
+#expense-detail-details-container-div{
+    padding: 10px;
+}
+
+#expense-detail-description-container-div{
+    margin-left: 20px;
+}
+
+#expense-detail-expense-amount-label{
+    font-weight: 800;
+}
+
+#expense-detail-expense-description-label-div{
+    margin-top: 20px;
+    font-weight: 800;
+}
+
+.expense-detail-line-divider{
+    margin: auto;
+    padding: 0.5px;
+    width:90%;
+    background-color: rgba(50, 50, 50, 0.3);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.expense-detail-data-div{
+    max-height: 100px;
+    transition: all 0.5s ease;
+}
+
+.expense-detail-form-field-div{
+    margin-left: 20px;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.expense-detail-toggle-edit-btn{
+    float: right;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+#expense-detail-expense-amount-div{
+    margin-left: 20px;
+}
+
+.hidden{
+    max-height: 0;
+    overflow: hidden;
+}
+
+.show-display-field{
+    max-height: 500px;
+    overflow: hidden;
+}
+
+.expense-data-field{
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgb(50, 50, 50);
+    height: 20px;
+    resize: none;
+}
+
+.expense-data-field:focus{
+    outline: none;
+}
+
+.expense-detail-submit-btn-div{
+    text-align: center;
+}
+
+#expense-detail-submit-btn{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    background-color: rgb(40, 80, 80);
+    color: beige;
+    cursor: pointer;
+    border: 1px solid rgb(100, 200, 200);
+    margin-bottom: 10px;
+}

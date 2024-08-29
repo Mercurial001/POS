@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section>
+        <div class="reports-report-heading-div">
+            <h1>Reports</h1>
+        </div>
+        <div class="reports-report-block-container-div">
+            <a class="reports-report-link" href="{% url 'expiration' %}">
+                <div class="reports-report-block">
+                    <div class="reports-report-link">
+                        Expirations
+                    </div>
+                </div>
+            </a>
+            <a class="reports-report-link" href="{% url 'sold-products' %}">
+                <div class="reports-report-block">
+                    <div class="reports-report-link">
+                        Sold Products
+                    </div>
+                </div>
+            </a>
+            <a class="reports-report-link" href="{% url 'sold-out-products' %}">
+                <div class="reports-report-block">
+                    <div class="reports-report-link">
+                        Sold Out Products
+                    </div>
+                </div>
+            </a>
+            <a class="reports-report-link" href="{% url 'expenses' %}">
+                <div class="reports-report-block">
+                    <div class="reports-report-link">
+                        Expenses
+                    </div>
+                </div>
+            </a>
+            <a class="reports-report-link" href="{% url 'revenues' %}">
+                <div class="reports-report-block">
+                    <div class="reports-report-link">
+                        Revenues
+                    </div>
+                </div>
+            </a>
+            <a class="reports-report-link" href="{% url 'income' %}">
+                <div class="reports-report-block">
+                    <div class="reports-report-link">
+                        Income
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+{% endblock %}

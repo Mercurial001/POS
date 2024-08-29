@@ -1,0 +1,87 @@
+                <div class="scanning-products-table-results-div">
+                    <table>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Expiry Date
+                            </th>
+                            <th>
+                                Barcode
+                            </th>
+                        </tr>
+                        {% if not searched_product_name_input %}
+                            {% for product in products %}
+                                <tr class="scanning-product-search-products-table-row" id="searched-product{{ product.id }}">
+                                    <td>
+                                        {{ product.name }}
+                                    </td>
+                                    <td>
+                                        {{ product.type }}
+                                    </td>
+                                    <td>
+                                        {{ product.quantity }}
+                                    </td>
+                                    <td>
+                                        {{ product.price }}
+                                    </td>
+                                    <td>
+                                        {{ product.expiry_date }}
+                                    </td>
+                                    <td>
+                                        {{ product.barcode }}
+                                    </td>
+                                    <td>
+                                        <input class="scanning-products-searched-checkbox"
+                                               type="checkbox"
+                                               name="searched-product-ids"
+                                               value="{{ product.id }}">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            {% for product in searched_products %}
+                                <tr class="scanning-product-search-products-table-row" id="searched-product{{ product.id }}">
+                                    <td>
+                                        {{ product.name }}
+                                    </td>
+                                    <td>
+                                        {{ product.type }}
+                                    </td>
+                                    <td>
+                                        {{ product.quantity }}
+                                    </td>
+                                    <td>
+                                        {{ product.price }}
+                                    </td>
+                                    <td>
+                                        {{ product.expiry_date }}
+                                    </td>
+                                    <td>
+                                        {{ product.barcode }}
+                                    </td>
+                                    <td>
+                                        <input class="scanning-products-searched-checkbox"
+                                               type="checkbox"
+                                               name="searched-product-ids"
+                                               value="{{ product.id }}">
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" style="text-align: center;">No products</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>

@@ -1,0 +1,58 @@
+.registration-validation-utmost-container-section{
+    font-family: 'Montserrat';
+}
+
+.registration-validation-form-message{
+    text-align: center;
+    font-family: 'Montserrat';
+    padding: 10px;
+}
+
+.registration-validation-form{
+    margin: auto;
+    width: 40%;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.registration-validation-registration-validation-form-header-title{
+    border-bottom: 1px solid rgb(150, 150, 150);
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 800;
+    color: rgb(100, 100, 100);
+    text-transform: uppercase;
+}
+
+.registration-validation-form-input-label-div{
+    text-align: left;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.registration-validation-form-input-field-div{
+    margin: 20px;
+}
+
+.registration_validation_field{
+    width: 90%;
+    height: 25px;
+}
+
+.registration_validation_field:focus{
+    outline: none;
+}
+
+
+.registration-validation-form-btn{
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid rgb(30, 70, 70);
+    font-family: 'Montserrat';
+    cursor: pointer;
+    border-radius: 5px;
+}

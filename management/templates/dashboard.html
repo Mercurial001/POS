@@ -1,0 +1,498 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <script src="{% static 'chart.umd.js' %}"></script>
+    <section id="graphs-section">
+        <div class="graph-div">
+            <div class="analytics-box-div">
+                <div id="dashboard-filter-form-container-div">
+                    <form action="{% url 'dashboard' %}" method="GET">
+                        <div class="dashboard-graph-filter-div">
+                            <input class="dashboard-filter-field-input"
+                                   type="month"
+                                   id="monthPicker"
+                                   name="selected-month"
+                                   value="{{ default_date|date:'Y-m' }}">
+                        </div>
+                        <div class="dashboard-graph-filter-div">
+                            <select class="dashboard-filter-field-input"
+                                    name="type-filter"
+                                    id="sold-product-type-select" oninput="{{ selected_type_sold_product }}">
+                                <option value="None">None</option>
+                                {% for type in product_type %}
+                                    <option value="{{ type.product_type }}">{{ type.product_type }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="dashboard-graph-filter-div">
+                            <select class="dashboard-filter-field-input"
+                                    name="cashier-branch-filter"
+                                    id="sold-products-cashier-branch-select">
+                                <option value="None">None</option>
+                                {% for user in users %}
+                                    <option value="{{ user.username }}">{{ user.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="dashboard-graph-filter-div">
+                            <button id="dashboard-filter-btn" type="submit">
+                                Filter
+                                <i class="fa fa-filter"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                {% if selected_type_sold_product %}
+                    <div id="dashboard-filters-filter-display-div">
+                        <span class="dashboard-filter-applied-div">
+                            Filters Applied:
+                        </span>
+                        <span class="dashboard-filter-applied-div">
+                            Product Type:
+                        </span>
+                        <span class="dashboard-the-filter">
+                            {{ selected_type_sold_product }}
+                        </span>
+                        <span class="dashboard-filter-applied-div">
+                            Date:
+                        </span>
+                        <span class="dashboard-the-filter">
+                            {{ selected_month_sold_product }}
+                        </span>
+                        <span class="dashboard-filter-applied-div">
+                            User:
+                        </span>
+                        <span class="dashboard-the-filter">
+                            {{ selected_cashier_sold_product }}
+                        </span>
+                    </div>
+                    <canvas id="SoldPerProductsChartFiltered" width="1050" height="500"></canvas>
+                    <canvas id="ProductsSoldDailyChartFiltered" width="1050" height="500"></canvas>
+                    <canvas id="ProductsProfitDailyChartFiltered" width="1050" height="500"></canvas>
+                    <canvas id="ExpenseDailyChartFiltered" width="700" height="300"></canvas>
+                    <canvas id="IncomeDailyChartFiltered" width="700" height="300"></canvas>
+                {% elif not selected_type_sold_product %}
+                    <canvas id="SoldPerProductsChart" width="700" height="300"></canvas>
+                    <canvas id="ProductsSoldDailyChart" width="700" height="300"></canvas>
+                    <canvas id="dailyRevenueChart" width="700" height="300"></canvas>
+                    <canvas id="ExpenseDailyChart" width="700" height="300"></canvas>
+                    <canvas id="IncomeDailyChart" width="700" height="300"></canvas>
+                {% endif %}
+            </div>
+            <div class="analytics-box-div">
+
+            </div>
+        </div>
+    </section>
+    <script>
+
+        // Define your data and labels
+
+        var product_name = {{ summed_products_products|safe }};
+        var summed_sold_product = {{ summed_products_quantities|safe }};
+
+        var ctx = document.getElementById('SoldPerProductsChart').getContext('2d');
+
+        var data = {
+          labels: product_name,
+          datasets: [{
+            label: 'Sold Products',
+            data: summed_sold_product,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myBarChartSoldProduct = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+        // Define your data and labels
+
+        var date_sold = {{ product_sold_date|safe }};
+        var products_sold = {{ summed_sold_products_quantities|safe }};
+
+        var dailyProductsSoldChart = document.getElementById('ProductsSoldDailyChart').getContext('2d');
+
+        var data = {
+          labels: date_sold,
+          datasets: [{
+            label: 'Sales',
+            data: products_sold,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myBarChartDailySale = new Chart(dailyProductsSoldChart, {
+            type: 'line',
+            data: data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+        // Define your data and labels
+
+        var sold_product_date_sold = {{ sold_product_profit_date|safe }};
+        var products_sold_profit = {{ summed_sold_product_revenue|safe }};
+
+        var dailyRevenueChart = document.getElementById('dailyRevenueChart').getContext('2d');
+
+        var profit_data = {
+          labels: sold_product_date_sold,
+          datasets: [{
+            label: 'Revenue',
+            data: products_sold_profit,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myRevenueChart = new Chart(dailyRevenueChart, {
+            type: 'line',
+            data: profit_data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+        // Define your data and labels
+
+        var expense_date = {{ expense_date|safe }};
+        var expenses = {{ expense_sum|safe }};
+
+        var dailyExpenseChart = document.getElementById('ExpenseDailyChart').getContext('2d');
+
+        var expense_data = {
+          labels: expense_date,
+          datasets: [{
+            label: 'Expenses',
+            data: expenses,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myExpenseChart = new Chart(dailyExpenseChart, {
+            type: 'line',
+            data: expense_data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+        // Define your data and labels
+
+        var income_date = {{ income_date|safe }};
+        var income = {{ income_array|safe }};
+
+        var dailyIncomeChart = document.getElementById('IncomeDailyChart').getContext('2d');
+
+        var income_data = {
+          labels: income_date,
+          datasets: [{
+            label: 'Income',
+            data: income,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myExpenseChart = new Chart(dailyIncomeChart, {
+            type: 'line',
+            data: income_data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+
+    </script>
+
+    <script>
+        // Define your data and labels
+
+        var product_name_filtered = {{ summed_products_products_filtered|safe }};
+        var summed_sold_product_filtered = {{ summed_products_quantities_filtered|safe }};
+
+        var ctx_filtered = document.getElementById('SoldPerProductsChartFiltered').getContext('2d');
+
+        var data_filtered = {
+          labels: product_name_filtered,
+          datasets: [{
+            label: 'Sold Products (Filtered)',
+            data: summed_sold_product_filtered,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myBarChartFiltered = new Chart(ctx_filtered, {
+            type: 'bar',
+            data: data_filtered,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+        var date_sold_filtered = {{ product_sold_date_filtered|safe }};
+        var products_sold_filtered = {{ summed_sold_products_quantities_filtered|safe }};
+
+        var dailyProductsSoldChart = document.getElementById('ProductsSoldDailyChartFiltered').getContext('2d');
+
+        var data = {
+          labels: date_sold_filtered,
+          datasets: [{
+            label: 'Sales (Filtered)',
+            data: products_sold_filtered,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myBarChartDailySale = new Chart(dailyProductsSoldChart, {
+            type: 'line',
+            data: data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+        // Filtered Daily Profit
+        var sold_product_date_sold_filtered = {{ sold_product_revenue_date_filtered|safe }};
+        var products_sold_profit_filtered = {{ summed_sold_product_revenue_filtered|safe }};
+
+        var dailyProductsProfitChartFiltered = document.getElementById('ProductsProfitDailyChartFiltered').getContext('2d');
+
+        var profit_data_filtered = {
+          labels: sold_product_date_sold_filtered,
+          datasets: [{
+            label: 'Revenue (Filtered)',
+            data: products_sold_profit_filtered,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myChart = new Chart(dailyProductsProfitChartFiltered, {
+            type: 'line',
+            data: profit_data_filtered,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+        // Filtered Daily Profit
+        var sold_product_date_sold_filtered = {{ expense_date_filtered|safe }};
+        var products_sold_profit_filtered = {{ expense_sum_filtered|safe }};
+
+        var dailyProductsProfitChartFiltered = document.getElementById('ExpenseDailyChartFiltered').getContext('2d');
+
+        var profit_data_filtered = {
+          labels: sold_product_date_sold_filtered,
+          datasets: [{
+            label: 'Expense (Filtered)',
+            data: products_sold_profit_filtered,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myChart = new Chart(dailyProductsProfitChartFiltered, {
+            type: 'line',
+            data: profit_data_filtered,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+
+        // Filtered Daily Profit
+        var sold_product_date_sold_filtered = {{ for_income_date_filtered|safe }};
+        var products_sold_profit_filtered = {{ income_array_filtered|safe }};
+
+        var dailyProductsProfitChartFiltered = document.getElementById('IncomeDailyChartFiltered').getContext('2d');
+
+        var profit_data_filtered = {
+          labels: sold_product_date_sold_filtered,
+          datasets: [{
+            label: 'Income (Filtered)',
+            data: products_sold_profit_filtered,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myChart = new Chart(dailyProductsProfitChartFiltered, {
+            type: 'line',
+            data: profit_data_filtered,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+    </script>
+{% endblock %}
+
+
+
+<!--                <form action="{% url 'dashboard' %}" method="post">-->
+<!--                    {% csrf_token %}-->
+<!--                    <div class="dashboard-graph-filter-div">-->
+<!--                        <input type="month" id="monthPickerDailySales" name="selected-month-sold-product" value="{{ default_date|date:'Y-m' }}">-->
+<!--                    </div>-->
+<!--                    <div class="dashboard-graph-filter-div">-->
+<!--                        <select name="product-type" id="select-product-type">-->
+<!--                            {% for type in product_type %}-->
+<!--                                <option value="{{ type.product_type }}">{{ type.product_type }}</option>-->
+<!--                            {% endfor %}-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="dashboard-graph-filter-div">-->
+<!--                        <select name="daily-sales-cashier-branch-filter" id="daily-sales-cashier-branch-select">-->
+<!--                            {% for user in users %}-->
+<!--                                <option value="{{ user.id }}">{{ user.username }}</option>-->
+<!--                            {% endfor %}-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="dashboard-graph-filter-div">-->
+<!--                        <button type="submit">Filter</button>-->
+<!--                    </div>-->
+<!--                </form>-->
+

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="product-type-page-utmost-container-section">
+        <div class="product-type-table-page-container-div">
+            <div class="product-type-page-table-title-header">
+                Product Types
+            </div>
+            <table class="product-type-page-table">
+                <tr class="product-type-page-table-row">
+                    <th class="product-type-page-table-head">
+                        Name
+                    </th>
+                    <th class="product-type-page-table-head">
+                        Action
+                    </th>
+                </tr>
+                {% for product_type in product_type_objects %}
+                    <tr class="product-type-page-table-row">
+                        <td class="product-type-page-table-data">
+                            <div class="product-type-table-data-name"
+                                 id="product-type-name{{ product_type.id }}">
+                                {{ product_type.product_type }}
+                            </div>
+                            <form method="POST" class="product-type-edit-form-container-div">
+                                {% csrf_token %}
+                                <div>
+                                    <input class="product-type-name-input-field"
+                                           type="text"
+                                           name="product-type"
+                                           value="{{ product_type.product_type }}"
+                                           required
+                                    >
+                                    <input type="hidden" name="product-type-id" value="{{ product_type.id }}">
+                                </div>
+                                <button class="product-type-save-product-type-name-btn" name="change-product-type-btn">
+                                    <i class="fa fa-save"></i> Update
+                                </button>
+                            </form>
+
+                            <button type="button"
+                                    class="product-type-edit-name-btn"
+                                    id="edit-product-type-btn{{ product_type.id }}">
+                                <i style="" class="fa fa-edit"></i>
+                            </button>
+                        </td>
+                        <td class="product-type-page-table-data">
+                            <form class="product-type-page-remove-type-form"
+                                  action="{% url 'remove-product-type' product_type.product_type product_type.id %}">
+                                <button class="product-type-page-remove-type-btn" type="submit">
+                                    Remove
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+    <script>
+        const productTypeName = document.querySelectorAll('.product-type-table-data-name');
+        const productTypeFormContainer = document.querySelectorAll('.product-type-edit-form-container-div');
+        const productTypeEditBtn = document.querySelectorAll('.product-type-edit-name-btn');
+
+        let toggledIndex = []
+        let currentIndex;
+        productTypeEditBtn.forEach((button, index ) => {
+            button.addEventListener('click', ()=> {
+
+                productTypeName[index].classList.toggle('product-type-table-data-name-hide');
+                productTypeFormContainer[index].classList.toggle('product-type-edit-form-container-div-show');
+
+                toggledIndex.push(index);
+
+                if (toggledIndex.length >= 2) {
+                    currentIndex = toggledIndex[toggledIndex.length - 2];
+                    toggledIndex.shift();
+                    if (currentIndex != index
+                        &&
+                        productTypeName[currentIndex].classList.contains('product-type-table-data-name-hide')
+                        &&
+                        productTypeFormContainer[currentIndex].classList.contains('product-type-edit-form-container-div-show'))
+                    {
+                        productTypeName[currentIndex].classList.remove('product-type-table-data-name-hide');
+                        productTypeFormContainer[currentIndex].classList.remove('product-type-edit-form-container-div-show');
+                    }
+                }
+            })
+        });
+    </script>
+{% endblock %}

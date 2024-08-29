@@ -1,0 +1,218 @@
+html{
+    scroll-action: smooth;
+    margin: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  margin-right:5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.5);
+  border-radius: 10px;
+}
+
+body{
+    margin: 0;
+}
+
+/* base.html */
+
+#main-header{
+    z-index: 100;
+    width: 18%;
+    float: left;
+    background-color: rgb(10, 40, 40);
+    color: beige;
+    font-family: 'Montserrat';
+    position: fixed;
+    min-height: 100vh;
+}
+
+.main-header-link-container-div{
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+.main-header-link-container-div a{
+    color: beige;
+    text-decoration: none;
+}
+
+.base-block-content-container-div{
+    width: 82%;
+    float: right;
+}
+
+#notification-toggle{
+    cursor: pointer;
+}
+
+.notification-counter{
+    position: absolute;
+    background-color: rgb(150, 20, 20);
+    font-size: 8px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 50%;
+    margin-left: 7px;
+    margin-top: -5px;
+}
+
+.notification-list{
+    position: absolute;
+    background-color: rgba(40, 100, 100, 0.2);
+    height: 300px;
+    width: 400px;
+    border-radius: 10px;
+    border: 1px solid rgb(40, 100, 100);
+    overflow-y: scroll;
+    margin-left: 150px;
+    margin-top: -20px;
+    visibility: hidden;
+}
+
+.notification-list-show{
+    visibility: visible;
+    z-index: 1000000;
+}
+
+.notification{
+    margin: auto;
+    width: 95%;
+    margin-top: 5px;
+    min-height: 20px;
+    background-color: rgb(40, 80, 80);
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius:10px;
+    border: 1px solid rgb(150, 150, 150);
+}
+
+.notification-title{
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.notification-date-time{
+    margin-bottom: 10px;
+    font-size: 10px;
+}
+
+.notification-message{
+    font-size: 12px;
+}
+
+.notification-delete{
+    color: beige;
+    text-decoration: none;
+    font-size: 12px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.notification-empty-notifier{
+    font-weight: 800;
+    text-transform: uppercase;
+    font-family: Impact;
+    text-align: center;
+    margin-top: 100px;
+    font-size: 30px;
+    color: rgb(100, 100, 100);
+    letter-spacing: 2px;
+}
+
+/* expiration.html */
+
+.expiration-expired-upcoming-products-container{
+    text-align: center;
+}
+
+.expiration-expired-products-container-div{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.expiration-product-container-title-heading-div{
+    font-family: Impact;
+    font-size: 40px;
+}
+
+.expiration-products-container-div{
+    text-align: left;
+}
+
+.expiration-product-div{
+    border: 1px solid rgb(80, 150, 150);
+    background-color: rgba(80, 150, 150, 0.3);
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+}
+
+.loading-spinner {
+    display: none;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #7983ff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+.htmx-request.loading-spinner {
+    display: inline-block;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-spinner-product-list-container-div{
+    position: absolute;
+}
+
+.loading-spinner-product-list {
+    text-align: center;
+    display: none;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #7983ff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+.htmx-request.loading-spinner-product-list {
+    display: inline-block;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+

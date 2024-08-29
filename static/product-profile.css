@@ -1,0 +1,122 @@
+.product-profile-field-div{
+    display: none;
+}
+
+.product-profile-form-element-div{
+    display: inline-block;
+}
+
+.product-profile-utmost-container-section{
+    background-color: rgb(220, 220, 220);
+    width:70%;
+    margin: auto;
+    min-height: 89.6vh;
+    margin-top: 48px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-family: 'Montserrat';
+}
+
+#product-profile-product-image-div{
+    text-align: center;
+}
+
+#product-profile-product-img{
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.product-profile-divider-line{
+    margin: auto;
+    width: 90%;
+    padding:0.5px;
+    background-color: rgba(100, 100, 100, 0.4);
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.product-profile-product-textual-details-container-div{
+    text-align: center;
+}
+
+.product-profile-label-and-edit-div{
+    background-color: rgb(100, 100, 100);
+    color: beige;
+    padding-left: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    overflow: hidden;
+    width: 160px;
+}
+
+.product-profile-label{
+    font-size: 20px;
+    float: left;
+}
+
+.product-profile-edit-btn-div{
+    float: right;
+    cursor: pointer;
+    margin-right:15px;
+    margin-top: 3px;
+}
+
+.product-profile-product-data-and-field-container-div{
+    background-color: rgb(180, 180, 180);
+    padding: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 160px;
+    vertical-align: top;
+}
+
+.product-profile-data-and-field-div{
+    margin: 15px;
+    display: inline-block;
+    /*    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;*/
+    border-radius: 5px;
+}
+
+#product-profile-save-data-btn{
+    background: none;
+    background-color: rgb(20, 50, 50);
+    color: beige;
+    border-radius: 5px;
+    border: 1px solid rgb(200, 200, 200);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+    font-family: 'Montserrat';
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.product-profile-field{
+    margin: auto;
+    width: 85%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgb(150, 150, 150);
+}
+
+.product-profile-field:focus{
+    outline: none;
+}
+
+.product-profile-img-field-container{
+    width: 300px;
+}
+
+#product-img-edit-btn-div{
+    float: right;
+}
+
+
+

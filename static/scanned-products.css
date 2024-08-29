@@ -1,0 +1,302 @@
+
+.scanned-products-utmost-container-section{
+    overflow: hidden;
+}
+
+.scanned-products-products-scanned-list{
+    float: left;
+}
+
+.scanned-products-scanned-product{
+    float: right;
+}
+
+.scanned-products-table-container-div{
+    float: left;
+    min-height: 55vh;
+    background-color: rgb(200, 200, 200);
+    width:40vw;
+    /*    height: 30vh;
+        overflow: scroll;*/
+}
+
+.scanned-products-total-price-container-div{
+    background-color: rgb(80, 150, 150);
+    text-align: right;
+    font-family: Impact;
+    font-size: 35px;
+    color: beige;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+
+.table{
+    height: 55vh;
+    overflow-y: scroll;
+}
+
+.scanned-products-table-head{
+    background-color: rgb(10, 40, 40);
+    color: beige;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: Lato, Impact;
+}
+
+.scanned-products-scanned-product{
+    background-color: rgb(100, 100, 100);
+    padding: 20px;
+    margin-top: 20px;
+    margin-left: 70px;
+    border-radius: 10px;
+}
+
+.scanned-products-table-data{
+    background-color: rgba(100, 200, 200, 0.3);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.scanned-products-lower-table-data{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgb(50, 100, 100);
+    color: beige;
+}
+
+#scanned-products-table-data-total-price-title{
+    font-family:Lato, Impact;
+    font-weight: 800;
+}
+
+.scanned-products-table-data a{
+    text-decoration: none;
+}
+
+#scanned-products-table-head-name{
+    width: 350px;
+}
+
+#scanned-products-table-head-quantity{
+    width:100px;
+}
+
+#scanned-products-table-head-price{
+    width:100px;
+}
+
+#scanned-products-table-data-quantity{
+    text-align: center;
+}
+
+#scanned-products-table-data-price{
+    text-align: center;
+}
+
+#scanned-products-table-data-total-price{
+    text-align: right;
+    font-family: Impact;
+    font-size: 40px;
+    letter-spacing: 2px;
+    margin-right: 20px;
+}
+
+#scanned-products-table-data-total-price div{
+    margin-right: 20px;
+}
+
+.scanned-products-add-quantity-form{
+    display: none;
+}
+
+.scanned-products-show-add-quantity-form{
+    display: block;
+}
+
+.scanned-products-blot-quantity{
+    display: none;
+}
+
+.scanned-products-add-quantity-element{
+    display: inline-block;
+}
+
+.scanned-quantity-field{
+    width: 18px;
+}
+
+.scanned-products-scanned-product-label-container-div{
+    background-color: rgb(150, 150, 150);
+    width: 140px;
+    padding: 10px;
+    font-family: 'Montserrat';
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-left: 20px;
+    margin-bottom: -20px;
+    color: beige;
+}
+
+.scanned-products-scanned-product-detail{
+    height: 10px;
+    width: 300px;
+    padding: 20px;
+    background-color: rgb(230, 230, 230);
+    margin: 10px;
+    text-align: left;
+    border-radius: 10px;
+    font-family: 'Impact';
+    color: rgb(70, 70, 70);
+}
+
+.scanning-product-entire-product-list{
+    position: relative;
+    transition: all ease 0.7s;
+}
+
+.scanned-products-barcode-camera-scanner-container-div{
+    display: none;
+}
+
+.scanned-products-add-quantity-btn-div{
+    display: none;
+}
+
+.scanned-products-barcode-camera-scanner-container-div img{
+    height: 100px;
+}
+
+.scanned-product-barcode-none{
+    display: none;
+}
+
+#scanned-barcode{
+    background: none;
+    border: none;
+    outline: none;
+    caret-color: transparent;
+    font-family: 'Impact';
+    color: rgb(70, 70, 70);
+    font-size: 17px;
+    width: 200px;
+}
+
+.toggle-quantity-conf-forms{
+    display: none;
+}
+
+.toggle-quantity-conf-form{
+    display: block;
+}
+
+.toggle-quantity-product-btns{
+    background: none;
+    border: none;
+    font-family: 'Montserrat';
+    cursor: pointer;
+    text-align: center;
+    font-weight: 800;
+    color: rgb(70, 70, 70);
+}
+
+.toggle-quantity-product-btn-hide{
+    display: none;
+}
+
+.product-configure-quantity-fields{
+    text-align: center;
+    font-family: 'Montserrat';
+    font-weight: 800;
+    background: none;
+    border: none;
+    color: rgb(70, 70, 70);
+    border-bottom: solid 1px rgb(70, 70, 70);
+}
+
+.product-configure-quantity-fields:focus{
+    outline: none;
+}
+
+.scanned-product-row-highlight{
+    background-color: yellow;
+    color: rgb(40, 40, 40);
+}
+
+.scanned-product-row-highlight-selected{
+    background-color: green;
+    color: rgb(40, 40, 40);
+}
+
+.scanning-product-search-products-table-div{
+    top: 150px;
+    left: 370px;
+    width: fit-content;
+    position: absolute;
+    background-color: rgb(10, 50, 50);
+    padding: 10px;
+    border-radius: 10px;
+    color: beige;
+    font-family: 'Montserrat';
+    display: none;
+}
+
+.scanning-product-search-products-table-div-show{
+    display: block;
+}
+
+.scanning-products-table-results-div{
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.scanning-product-search-product-form{
+    padding: 10px;
+}
+
+.scanning-product-search-product-form-field{
+     width: 80%;
+}
+
+.scanning-search-products-search-btn{
+    display: none;
+}
+
+.scanned-sell-clear-change-div{
+    padding-top: 10px;
+    width: 50%;
+}
+
+.scanned-sell-form-container-div{
+    padding: 10px;
+}
+
+.scanned-sell-form{
+    margin-top: 420px;
+}
+
+.scanned-sell-input-field{
+    width: 100%;
+    border-radius: 4px;
+    height: 20px;
+    border: 1px solid rgb(100, 100, 100);
+    padding: 10px;
+}
+
+.scanned-sell-input-field:focus{
+    outline: none;
+}
+
+.scanned-sell-btn{
+    margin: auto;
+    width: 100%;
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 40px;
+    font-family: 'Montserrat';
+    cursor: pointer;
+    background-color: rgb(100, 150, 150);
+    border: 1px solid rgb(80, 130, 130);
+    border-radius: 4px;
+    color: beige;
+}

@@ -1,0 +1,106 @@
+.inventory-messages-container-div{
+    text-align: center;
+    padding: 1px;
+}
+
+.inventory-forms-container-div{
+    margin: auto;
+    width: 70%;
+    font-family: 'Montserrat';
+    margin-top: 10px;
+}
+
+.inventory-form-title-header-div{
+    font-weight: 800;
+    border-bottom: 1px solid rgb(200, 200, 200);
+    padding: 5px;
+    margin-top: -10px;
+    color: beige;
+    background-color: rgb(40, 80, 80);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.inventory-form-container-div{
+    /*float: left;*/
+    margin-top: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+    border-radius: 2px;
+}
+
+.inventory-add-product-type-form-container-div{
+    /*float: right;*/
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 10px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.inventory-input-field-name{
+    font-size: 12px;
+    color: rgb(20, 20, 20);
+    font-weight: 800;
+    margin-bottom: -5px;
+}
+
+.inventory-field-container-div{
+    margin: 10px;
+    text-align: left;
+}
+
+.product-inventory-field{
+    width: 95%;
+    margin: auto;
+    height: 30px;
+    border-radius: 2px;
+    border: 1px solid rgb(180, 180, 180);
+}
+
+.product-inventory-field:focus{
+    outline: none;
+}
+
+.inventory-add-product-type-form{
+    text-align: left;
+}
+
+.add-product-type-field{
+    width: 95%;
+    margin: auto;
+    height: 25px;
+    border-radius: 2px;
+    border: 1px solid rgb(180, 180, 180);
+}
+
+.add-product-type-btn-container{
+    text-align: right;
+    margin-right: 30px;
+}
+
+.inventory-btn{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid rgb(180, 180, 180);
+    background-color: rgb(10, 50, 50);
+    color: beige;
+    border-radius: 5px;
+    font-family: 'Montserrat';
+    cursor: pointer;
+    transition: 0.6s all;
+}
+
+.inventory-btn:hover{
+    background-color: rgb(60, 120, 120, 0.5);
+}
+
+.inventory-btn:active{
+    background-color: rgb(60, 120, 120, 0.5);
+}
+
+.add-product-type-field:focus{
+    outline: none;
+}

@@ -1,0 +1,314 @@
+.selected {
+    background-color: rgb(10, 40, 40); /* Blue color */
+    color: beige; /* White text on selected background */
+}
+
+.products-container-section{
+    text-align: center;
+    min-height: 100vh;
+    margin-right: 30px;
+}
+
+.products-selected-products-list{
+    float: left;
+}
+
+.products-product-container-div{
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.awd{
+    display: inline-block;
+}
+
+.products-type-container-div{
+    display: none;
+}
+
+.products-product-container-div-show{
+    display: block;
+}
+
+#products-product-container{
+    height: 250px;
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.products-quantity-input{
+    width: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.products-link-to-product-profile{
+    text-decoration: none;
+}
+
+.products-product-details-container-div{
+    text-align: left;
+    color: rgb(50, 50, 50);
+}
+
+.products-product-img-container-div{
+    text-align: center;
+}
+
+.products-product-image{
+    height: 100px;
+    width: 150px;
+    border-radius: 5px;
+}
+
+.products-product-no-img-div{
+    text-align: center;
+    margin:auto;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    width: 150px;
+    border-radius: 5px;
+    background-color: rgb(150, 150, 150);
+}
+
+.products-product-no-img-div span{
+    font-family: Impact;
+    color: rgb(65, 65, 65);
+}
+
+.products-product-name{
+    margin-bottom: 20px;
+}
+
+.products-product-checkbox-input{
+    display: none
+}
+
+.products-quantity-btn-span{
+    font-size: 30px;
+    border-radius: 50%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+}
+
+.products-quantity-element{
+    display: inline-block;
+    vertical-align: top;
+    color: rgb(50, 50, 50);
+    font-family: 'Montserrat';
+    font-weight: 800;
+}
+
+.products-quantity-btn{
+    background: none;
+    cursor: pointer;
+    font-weight: 800;
+    border: none;
+    color: rgb(80, 80, 80);
+    font-family: 'Montserrat';
+}
+
+#products-subtract-quantity{
+    color: rgb(100, 20, 20);
+}
+
+#products-add-quantity{
+    color: rgb(20, 100, 20);
+}
+
+.products-product-quantity-input-container-div{
+    margin-top: 200px;
+    margin-left: 35px;
+    position: absolute;
+    font-family: 'Montserrat';
+    text-align: center;
+}
+
+.products-quantity-input:focus{
+    outline: none;
+}
+
+.products-product-toggle-btn{
+    margin: 20px;
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    padding: 10px;
+}
+
+.products-product-type-image{
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+.products-submit-selected-btn-div{
+    display: none;
+}
+
+.products-submit-selected-btn-div-show{
+    display: block;
+}
+
+.products-selected-products-array-div{
+    display: none;
+}
+
+.products-selected-products-array-div-show{
+    display: block;
+}
+
+.products-product-select-product-btns-div{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.products-select-more-products-div{
+    display: none;
+    cursor: pointer;
+    font-family: 'Montserrat';
+    border: 1px solid rgb(10, 40, 40);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-radius: 5px;
+    background-color: rgb(40, 80, 80);
+    border: none;
+    font-weight: 800;
+    color: beige;
+    font-size: 13px;
+}
+
+.products-select-more-products-div-show{
+    display: block;
+}
+
+.products-product-div1{
+    position: absolute;
+}
+
+#products-remove-selected-product-btn{
+    background: none;
+    border:none;
+    font-family: 'Montserrat';
+    font-weight: 800;
+    color: rgb(40, 40, 40);
+    cursor: pointer;
+}
+
+.selectedProductNames{
+    display: inline;
+}
+
+.products-sell-form-section{
+    float: left;
+    padding: 5px;
+    width: 100px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.products-form-operator-container-div{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#selected-product-select-sell{
+    margin-top:5px;
+}
+
+#submit-selected-btn{
+    background-color: rgb(40, 80, 80);
+    color: beige;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    font-family: 'Montserrat';
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+}
+
+#selectedProductNames{
+    margin-top:10px;
+    border-radius: 10px;
+    text-align: left;
+    font-family: 'Montserrat';
+    max-height: 100px;
+    width: 380px;
+    overflow-y: scroll;
+    background-color: rgb(230, 230, 230);
+    padding-left: 20px;
+}
+
+#products-sell-products-btn{
+    background-color: rgb(200, 200, 200);
+    color: rgb(20, 20, 20);
+    border: none;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: 'Montserrat';
+    box-shadow: rgb(0, 0, 0) 0px 1px 8px;
+    cursor: pointer;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.products-cash-input-field{
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    width: 85%;
+    padding-right: 10px;
+    border: rgb(200, 200, 200) solid 1px;
+    background-color: rgb(220, 220, 220);
+    margin-bottom:10px;
+}
+
+.products-cash-input-field:focus{
+    outline: none;
+}
+
+.loading-spinner {
+    display: none;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #7983ff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+.htmx-request.loading-spinner {
+    display: inline-block;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-spinner-product-list-container-div{
+    position: absolute;
+}

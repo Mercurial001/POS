@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="expense-page-utmost-container-section">
+        <div class="expenses-page-filter-form-container-div">
+            <form method="GET">
+                <div class="dashboard-graph-filter-div">
+                    <input class="dashboard-filter-field-input"
+                           type="month"
+                           id="monthPicker"
+                           name="expenses-selected-date"
+                           value="{{ default_date|date:'Y-m' }}">
+                </div>
+                <div class="dashboard-graph-filter-div">
+                    <button id="dashboard-filter-btn" type="submit">
+                        Filter
+                        <i class="fa fa-filter"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        {% if not selected_date %}
+            <div class="expenses-page-download-spreadsheet-div">
+                <a class="expenses-page-download-spreadsheet" href="{% url 'expenses-excel' %}">Download Spreadsheet</a>
+            </div>
+            <div class="expenses-page-table-container-div">
+                <div class="expenses-page-total-expense-div">
+                    Total Expenses: {{ total_expenses }}
+                </div>
+                <table class="expenses-page-table">
+                    <tr class="expenses-page-table-row">
+                        <th class="expenses-page-table-head">Amount</th>
+                        <th class="expenses-page-table-head">Date</th>
+                    </tr>
+                    {% for expense in expenses %}
+                            <tr class="expenses-page-table-row">
+                                <td class="expenses-page-table-data">
+                                    <a class="expenses-page-expense-configuration-link"
+                                       href="{% url 'expense-details' expense.id expense.date_no_time %}">
+                                        {{ expense.expense }}
+                                    </a>
+                                </td>
+                                <td class="expenses-page-table-data">
+                                    {{ expense.date_no_time }}
+                                </td>
+                            </tr>
+
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            {% if filtered_expenses %}
+                <div class="expenses-page-download-spreadsheet-filtered-div">
+                    <a class="expenses-page-download-spreadsheet"
+                       href="{% url 'expense-spreadsheet-filtered' %}?expenses-selected-date={{selected_date.year}}-{{ selected_date.month }}">
+                        Download Spreadsheet for {{ selected_date }}
+                    </a>
+                </div>
+                <div class="expenses-page-filtered-message-div">
+                    Expenses for {{ selected_date }}
+                </div>
+                <div class="expenses-page-table-container-div">
+                    <div class="expenses-page-total-expense-div">
+                        Total Expenses: {{ filtered_expenses_sum }}
+                    </div>
+                    <table class="expenses-page-table">
+                        <tr class="expenses-page-table-row">
+                            <th class="expenses-page-table-head">Amount</th>
+                            <th class="expenses-page-table-head">Date</th>
+                        </tr>
+                        {% for expense in filtered_expenses %}
+                                <tr class="expenses-page-table-row">
+                                    <td class="expenses-page-table-data">
+                                        <a class="expenses-page-expenses-detail-link"
+                                           href="{% url 'expense-details' expense.id expense.date_no_time %}">
+                                            {{ expense.expense }}
+                                        </a>
+                                    </td>
+                                    <td class="expenses-page-table-data">
+                                        {{ expense.date_no_time }}
+                                    </td>
+                                </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <div class="expense-page-no-data-filtered-notification-div">
+                    No data for {{ selected_date }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </section>
+{% endblock %}

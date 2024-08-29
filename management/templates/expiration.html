@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="expiration-utmost-container-section">
+        <div class="expiration-expired-upcoming-products-container">
+            <div class="expiration-expired-products-container-div">
+                <div class="expiration-product-container-title-heading-div">
+                    Products Upcoming Expiration
+                </div>
+                <div class="expiration-products-container-div">
+                    {% for product in upcoming_expiring_products %}
+                        <div class="expiration-product-div">
+                            {{ product.name }} - Expiration Date: {{ product.expiry_date }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="expiration-expired-products-container-div">
+                <div class="expiration-product-container-title-heading-div">
+                    Expired Products
+                </div>
+                <div class="expiration-products-container-div">
+                    {% for product in expired_products %}
+                        <div class="expiration-product-div">
+                            {{ product.name }} - Expired on: {{ product.expiry_date }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

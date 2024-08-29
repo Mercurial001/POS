@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="product-profile-utmost-container-section">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div id="product-profile-product-image-div">
+                <div class="product-profile-data-and-field-div">
+                    <div class="product-profile-edit-btn-div" id="product-img-edit-btn-div">
+                        <i class="fa fa-edit"></i>
+                    </div>
+                    <div class="product-profile-product-data-div"></div>
+                    <div>
+                        {% if product.image %}
+                            <div>
+                                <img id="product-profile-product-img" src="{{ product.image.url }} ">
+                            </div>
+                        {% else %}
+                            <div>
+                                <span>No Image</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="product-profile-img-field-container">
+                        <div class="product-profile-field-div">
+                            {{ product_form.image }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-profile-divider-line"></div>
+            <div class="product-profile-product-textual-details-container-div">
+                <div class="product-profile-data-and-field-div">
+                    <div class="product-profile-label-and-edit-div">
+                        <div class="product-profile-label">
+                            Name
+                        </div>
+                        <div class="product-profile-edit-btn-div">
+                            <i class="fa fa-edit"></i>
+                        </div>
+                    </div>
+                    <div class="product-profile-product-data-and-field-container-div">
+                        <div class="product-profile-product-data-div">
+                            {{ product.name }}
+                        </div>
+                        <div class="product-profile-field-div">
+                            {{ product_form.name }}
+                        </div>
+                    </div>
+                </div>
+                <div class="product-profile-data-and-field-div">
+                    <div class="product-profile-label-and-edit-div">
+                        <div class="product-profile-label">
+                            Type
+                        </div>
+                        <div class="product-profile-edit-btn-div">
+                            <i class="fa fa-edit"></i>
+                        </div>
+                    </div>
+                    <div class="product-profile-product-data-and-field-container-div">
+                        <div class="product-profile-product-data-div">
+                            {{ product.type }}
+                        </div>
+                        <div class="product-profile-field-div">
+                            {{ product_form.type }}
+                        </div>
+                    </div>
+                </div>
+                <div class="product-profile-data-and-field-div">
+                    <div class="product-profile-label-and-edit-div">
+                        <div class="product-profile-label">
+                            Barcode
+                        </div>
+                        <div class="product-profile-edit-btn-div">
+                            <i class="fa fa-edit"></i>
+                        </div>
+                    </div>
+                    <div class="product-profile-product-data-and-field-container-div">
+                        <div class="product-profile-product-data-div">
+                            {{ product.barcode }}
+                        </div>
+                        <div class="product-profile-field-div">
+                            {{ product_form.barcode }}
+                        </div>
+                    </div>
+                </div>
+                <div class="product-profile-data-and-field-div">
+                    <div class="product-profile-label-and-edit-div">
+                        <div class="product-profile-label">
+                            Price
+                        </div>
+                        <div class="product-profile-edit-btn-div">
+                            <i class="fa fa-edit"></i>
+                        </div>
+                    </div>
+                    <div class="product-profile-product-data-and-field-container-div">
+                        <div class="product-profile-product-data-div">
+                            {{ product.price }}
+                        </div>
+                        <div class="product-profile-field-div">
+                            {{ product_form.price }}
+                        </div>
+                    </div>
+                </div>
+                <div class="product-profile-data-and-field-div">
+                    <div class="product-profile-label-and-edit-div">
+                        <div class="product-profile-label">
+                            Expiry Date
+                        </div>
+                        <div class="product-profile-edit-btn-div">
+                            <i class="fa fa-edit"></i>
+                        </div>
+                    </div>
+                    <div class="product-profile-product-data-and-field-container-div">
+                        <div class="product-profile-product-data-div">
+                            {{ product.expiry_date }}
+                        </div>
+                        <div class="product-profile-field-div">
+                            {{ product_form.expiry_date }}
+                        </div>
+                    </div>
+                </div>
+                <div class="product-profile-data-and-field-div">
+                    <div class="product-profile-label-and-edit-div">
+                        <div class="product-profile-label">
+                            Stock
+                        </div>
+                        <div class="product-profile-edit-btn-div">
+                            <i class="fa fa-edit"></i>
+                        </div>
+                    </div>
+                    <div class="product-profile-product-data-and-field-container-div">
+                        <div class="product-profile-product-data-div">
+                            {{ product.quantity }}
+                        </div>
+                        <div class="product-profile-field-div">
+                            {{ product_form.quantity }}
+                        </div>
+                    </div>
+                </div>
+                <div class="product-profile-btn-container-div">
+                    <button id="product-profile-save-data-btn" type="submit">Save</button>
+                </div>
+            </div>
+        </form>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all elements with the class "product-profile-edit-btn-div"
+            var editButtons = document.querySelectorAll('.product-profile-edit-btn-div');
+
+            // Loop through each edit button
+            editButtons.forEach(function (button) {
+                // Add a click event listener to each edit button
+                button.addEventListener('click', function () {
+                    // Find the parent element with the class "product-profile-data-and-field-div"
+                    var dataAndFieldDiv = button.closest('.product-profile-data-and-field-div');
+
+
+                    // Find the child elements with classes "product-profile-product-data-div" and "product-profile-field-div"
+                    var productDataDiv = dataAndFieldDiv.querySelector('.product-profile-product-data-div');
+                    var fieldDiv = dataAndFieldDiv.querySelector('.product-profile-field-div');
+
+                    // Toggle the display property
+                    productDataDiv.style.display = 'none';  // Hide product data
+                    fieldDiv.style.display = 'block';  // Show field
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+<!--product-profile-data-and-field-div-->
+<!--product-profile-label-and-edit-div-->
+<!--product-profile-label-->
+<!--product-profile-edit-btn-div-->
+<!--product-profile-product-data-and-field-container-div-->
+<!--product-profile-product-data-div-->
+<!--product-profile-field-div-->

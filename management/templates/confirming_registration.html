@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="registrants-utmost-container-section">
+        <header class="registrants-title-header">
+            Registrants
+        </header>
+        <table class="registrants-table">
+            <tr class="registrants-table-row">
+                <th class="registrants-table-head">Username</th>
+                <th class="registrants-table-head">Email</th>
+                <th class="registrants-table-head">Group</th>
+                <th class="registrants-table-head">Registration Date</th>
+                <th class="registrants-table-head">Action</th>
+            </tr>
+            {% for registrant in registrants %}
+            <tr class="registrants-table-row">
+                <td class="registrants-table-data">
+                    {{ registrant.username }}
+                </td>
+                <td class="registrants-table-data">
+                    {{ registrant.email }}
+                </td>
+                <td class="registrants-table-data">
+                    {{ registrant.group }}
+                </td>
+                <td class="registrants-table-data">
+                    {{ registrant.date_time }}
+                </td>
+                <td class="registrants-table-data">
+                    <form class="registrants-confirm-form"
+                          method='POST'
+                          action="{% url 'confirm-registration' registrant.username %}">
+                        {% csrf_token %}
+                        <button class="registrants-confirm-form-btn"
+                                type="submit">Confirm</button>
+                    </form>
+                    <form class="registrants-confirm-form" action="{% url 'deny-registration' registrant.id %}">
+                        <button class="registrants-confirm-form-btn"
+                                id="registrant-deny-registration-btn"
+                                type="submit">
+                            Deny
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+                <tr class="registrants-table-row">
+                    <td class="registrants-table-data" colspan="5" style='text-align: center;'>
+                        No Registrants
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+
+{% endblock %}

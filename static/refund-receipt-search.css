@@ -1,0 +1,39 @@
+.search-receipt-search-form-div{
+    text-align: center;
+}
+
+.search-receipt-message-block-div{
+    margin: 20px;
+    font-family: 'Montserrat';
+}
+
+.search-receipt-form{
+    margin: 180px;
+}
+
+.search-form-element-div{
+
+}
+
+.refund-search-id-input-field{
+    width: 40%;
+    height: 30px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(100, 100, 100);
+}
+
+.refund-search-id-input-field:focus{
+    outline: none;
+}
+
+.search-receipt-form-btn{
+    width: 20%;
+    background-color: rgb(50, 100, 100);
+    padding: 5px;
+    color: beige;
+    font-family: 'Montserrat';
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}

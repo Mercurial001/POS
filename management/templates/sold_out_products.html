@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="sold-out-products-utmost-container-section">
+        <div class="sold-out-products-heading-div">
+            <h1>Sold Out Products</h1>
+        </div>
+        <div class="sold-out-products-table-container-div">
+            <table class="sold-out-products-table">
+                <tr class="sold-out-products-table-row">
+                    <th class="sold-out-products-table-head">Sold Out Product</th>
+                    <th class="sold-out-products-table-head">Date Sold Out</th>
+                </tr>
+                {% for product in products %}
+                    <tr class="sold-out-products-table-row">
+                        <td class="sold-out-products-table-data">{{ product.name }}</td>
+                        <td class="sold-out-products-table-data">{{ product.date_sold_out_time }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="registration-form-section">
+        <div id="registration-heading-div">
+            <h1>REGISTRATION</h1>
+        </div>
+
+        <article id="registration-form">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div>
+                    {{ form.username }}
+                </div>
+                <div>
+                    {{ form.email }}
+                </div>
+                <div>
+                    {{ form.password1 }}
+                </div>
+                <div>
+                    {{ form.password2 }}
+                </div>
+                <div class="captcha-container">
+                    {{ form.captcha }}
+                </div>
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                <div class="register-error-message">
+                    {% if form.errors %}
+                      <ul class="error-list">
+                        {% for field, errors in form.errors.items %}
+                          {% for error in errors %}
+                            <li> {{ error }}</li>
+                          {% endfor %}
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                </div>
+                <button id="register-btn">Register</button>
+                <!--                <div class="register-error-message">-->
+                <!--                    {{ form.errors }}-->
+                <!--                </div>-->
+            </form>
+            <div id="registration-login-link">
+                <a href="{% url 'login' %}">
+                    <p class="link-text">Already Have an Account?</p>
+                </a>
+            </div>
+        </article>
+    </section>
+{% endblock %}

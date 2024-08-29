@@ -1,0 +1,149 @@
+{% extends 'scanned_product_cashier.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="selected-sell-selected-products-lists">
+        {% include 'products_list_cashier.html' %}
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            ToggleProducts()
+          // HTMX event listener to reapply the toggle functionality after successful response
+          document.addEventListener('htmx:afterSwap', function(event) {
+            ToggleProducts()
+          });
+        });
+
+        let selectedProducts = [];
+
+        function toggleSelection(element, productName) {
+            // Find the checkbox within the clicked div
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            const quantityInput = document.getElementById(`scanned-products-form${checkbox.value}`);
+            const quantityField = document.getElementById(`selected-sell-product-div${checkbox.value}`);
+            const submitSelectedBtn = document.querySelector('.select-sell-submit-selected-btn-div');
+
+            // Toggle the checkbox's checked state
+            checkbox.checked = !checkbox.checked;
+
+            // Toggle the 'selected' class on the div
+            element.classList.toggle('selected', checkbox.checked);
+
+            quantityField.classList.toggle('selected');
+            quantityField.classList.toggle('select-sell-product-quantity-input-container-div-show');
+
+            // Set the value of the quantity input based on the checkbox state
+            quantityInput.value = checkbox.checked ? 1 : '';
+
+            if (checkbox.checked) {
+                // Add the product to the selectedProducts list
+                selectedProducts.push(productName);
+            } else {
+                // Remove the product from the selectedProducts list
+                const index = selectedProducts.indexOf(productName);
+                if (index !== -1) {
+                    selectedProducts.splice(index, 1);
+                }
+            }
+
+            if (selectedProducts.length > 0) {
+                submitSelectedBtn.classList.add('select-sell-submit-selected-btn-div-show');
+            } else {
+                submitSelectedBtn.classList.remove('select-sell-submit-selected-btn-div-show');
+            }
+
+            console.log(selectedProducts);
+
+            const selectedProductNamesDiv = document.getElementById('selectedProductNames');
+            selectedProductNamesDiv.innerHTML = selectedProducts.map(product => `${product}<div id="selected-product-select-sell">`).join('');
+            submitSelectedBtn.addEventListener('click', () => {
+                selectedProductNamesDiv.innerHTML = '';
+                selectedProducts = []; // Clear the selected products array
+            });
+        }
+
+        function validateQuantity(input) {
+            var maxQuantity = parseInt(input.getAttribute('max'));
+            var maxDigits = maxQuantity.toString().length;
+            input.maxLength = maxDigits;
+
+            var enteredValue = parseInt(input.value);
+
+            if (enteredValue > maxQuantity) {
+                input.setCustomValidity('');
+                input.reportValidity();
+                input.value = maxQuantity;
+            } else {
+                input.setCustomValidity('');
+            }
+        }
+
+        function incrementQuantity(productId) {
+            var inputElement = document.getElementById('scanned-products-form' + productId);
+            var currentValue = parseInt(inputElement.value, 10);
+            var maxValue = parseInt(inputElement.getAttribute('max'), 10);
+
+            // Ensure the value doesn't exceed the maximum
+            if (currentValue < maxValue) {
+                inputElement.value = currentValue + 1;
+            }
+        }
+
+        function decrementQuantity(productId) {
+            var inputElement = document.getElementById('scanned-products-form' + productId);
+            var currentValue = parseInt(inputElement.value, 10);
+
+            // Ensure the value doesn't go below 1
+            if (currentValue > 1) {
+                inputElement.value = currentValue - 1;
+            }
+        }
+
+        function ToggleProducts() {
+            const toggleProductTypeBtn = document.querySelectorAll('.select-sell-product-toggle-btn')
+
+            toggleProductTypeBtn.forEach(function(button) {
+                button.addEventListener('click', ()=> {
+                    const typeId = button.id.replace('select-sell-product-toggle-div', '');
+                    const productContainerDiv = document.getElementById(`select-sell-product-container-div${typeId}`);
+
+                    const submitSelectedBtn = document.querySelector('.select-sell-submit-selected-btn-div');
+                    const toggleBtnsContainer = document.querySelector('.select-sell-products-toggle-btn-container-div');
+                    const selectProductBtn = document.querySelector('.select-sell-select-more-products-div');
+                    const selectedProductNamesDiv = document.querySelector('.select-sell-selected-products-array-div');
+
+                    // select-sell-products-toggle-btn-container-div
+                    // select-sell-selected-products-array-div
+                    productContainerDiv.classList.toggle('select-sell-product-container-div-show');
+
+                    if (productContainerDiv.classList.contains("select-sell-product-container-div-show")) {
+                        toggleBtnsContainer.style.display = 'none';
+                        selectedProductNamesDiv.style.display = 'none';
+                        selectProductBtn.classList.add('select-sell-select-more-products-div-show');
+                    } else {
+                        toggleBtnsContainer.style.display = 'block';
+                        selectProductBtn.classList.remove('select-sell-select-more-products-div-show');
+                    };
+
+                    selectProductBtn.addEventListener('click', ()=> {
+                        const toggleContainer = document.querySelector('.select-sell-products-toggle-btn-container-div');
+                        productContainerDiv.classList.remove('select-sell-product-container-div-show');
+                        toggleContainer.style.display = 'block';
+                        selectedProductNamesDiv.style.display = 'block';
+                        selectProductBtn.classList.remove('select-sell-select-more-products-div-show');
+                    });
+
+                    toggleProductTypeBtn.forEach(function(otherBtn) {
+                        if (otherBtn !== button) {
+                            const otherBtnId = otherBtn.id.replace('select-sell-product-toggle-div', '');
+                            const otherProductContainerDiv = document.getElementById(`select-sell-product-container-div${otherBtnId}`);
+                            otherProductContainerDiv.classList.remove('select-sell-product-container-div-show');
+                        };
+                    });
+                });
+            });
+        };
+
+    </script>
+{% endblock %}

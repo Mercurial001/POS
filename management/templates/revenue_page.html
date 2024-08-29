@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="revenue-page-utmost-container-section">
+        <div class="revenue-page-form-container-div">
+            <form method="GET">
+                <div class="dashboard-graph-filter-div">
+                    <input class="dashboard-filter-field-input"
+                           type="month"
+                           id="monthPicker"
+                           name="revenue-page-selected-month"
+                           value="{{ default_date|date:'Y-m' }}">
+                </div>
+                <div class="dashboard-graph-filter-div">
+                    <button id="dashboard-filter-btn" type="submit">
+                        Filter
+                        <i class="fa fa-filter"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        {% if not selected_month %}
+        <div class="revenue-page-download-spreadsheet-div">
+            <a id="revenue-page-download-spreadsheet" href="{% url 'revenue-spreadsheet' %}">Download Spreadsheet</a>
+        </div>
+
+        <div class="revenue-page-table-container-div">
+            <div class="revenue-page-sum-container-div">
+                Total Revenue: {{ revenue_sum }}
+            </div>
+            <table class="revenue-page-table">
+                <tr class="revenue-page-table-row">
+                    <th class="revenue-page-table-head">
+                        Amount
+                    </th>
+                    <th class="revenue-page-table-head">
+                        Date
+                    </th>
+                </tr>
+                {% for revenue in revenues %}
+                    <tr class="revenue-page-table-row">
+                        <td class="revenue-page-table-data">{{ revenue.revenue }}</td>
+                        <td class="revenue-page-table-data">{{ revenue.date }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+            <div class="revenue-page-download-spreadsheet-div">
+                <a id="revenue-page-download-spreadsheet-filtered"
+                   href="{% url 'revenue-spreadsheet-filtered' %}?revenue-page-selected-month={{ selected_month.year }}-{{ selected_month.month }}">
+                    Download Spreadsheet for {{ selected_month }}
+                </a>
+            </div>
+            <div class="revenue-page-filter-date-div">
+                Revenue for Date: {{ selected_month }}
+            </div>
+            {% if filtered_revenues %}
+                <div class="revenue-page-table-container-div">
+                    <div class="revenue-page-sum-container-div">
+                        Total Revenue: {{ filtered_revenue_sum }}
+                    </div>
+                    <table class="revenue-page-table">
+                        <tr class="revenue-page-table-row">
+                            <th class="revenue-page-table-head">
+                                Amount
+                            </th>
+                            <th class="revenue-page-table-head">
+                                Date
+                            </th>
+                        </tr>
+                        {% for revenue in filtered_revenues %}
+                            <tr class="revenue-page-table-row">
+                                <td class="revenue-page-table-data">{{ revenue.revenue }}</td>
+                                <td class="revenue-page-table-data">{{ revenue.date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <div class="revenue-page-empty-data-notifier-div">
+                    No records for {{ selected_month }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </section>
+{% endblock %}

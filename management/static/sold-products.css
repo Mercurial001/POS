@@ -1,0 +1,14 @@
+.sold-products-utmost-container-div{
+    font-family: 'Montserrat';
+}
+
+.sold-product-instance-block-div{
+    border-radius: 3px;
+    padding: 10px;
+    margin: auto;
+    width: 50%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    min-height: 250px;
+}

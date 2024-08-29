@@ -1,0 +1,47 @@
+#login-form-container-div{
+    margin:auto;
+    width: 40%;
+    margin-top: 100px;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding-bottom: 40px;
+}
+
+.login-input-field{
+    width: 90%;
+    margin:auto;
+    margin-top:20px;
+    margin-bottom: 20px;
+    height: 25px;
+    border-radius: 3px;
+    border: 1px solid rgb(200, 200, 200);
+}
+
+.login-input-field:focus{
+    outline: none;
+}
+
+#login-btn{
+    background-color: rgba(10, 40, 40, 0.7);
+    border: 1px solid rgb(200, 200, 200);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: 'Montserrat';
+    color: rgb(200, 200, 200);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#login-register-account-div{
+    margin: 20px;
+    font-family: 'Montserrat';
+}
+
+#login-register-account-div a{
+    text-decoration: none;
+    color: rgb(100, 100, 100);
+}

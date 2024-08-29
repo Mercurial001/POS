@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'clear_change_htmx.css' %}">
+    <link rel="stylesheet" href="{% static 'products.css' %}">
+    <link rel="stylesheet" href="{% static 'product-profile.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'reports.css' %}">
+    <link rel="stylesheet" href="{% static 'sold_out_products.css' %}">
+    <link rel="stylesheet" href="{% static 'inventory.css' %}">
+    <link rel="stylesheet" href="{% static 'authentication.css' %}">
+    <link rel="stylesheet" href="{% static 'register.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'expense_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'revenue_page.css' %}">
+    <link rel="stylesheet" href="{% static 'income_page.css' %}">
+    <link rel="stylesheet" href="{% static 'expenses_page.css' %}">
+    <link rel="stylesheet" href="{% static 'select_sell.css' %}">
+    <link rel="stylesheet" href="{% static 'select_sell_responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'add_expense.css' %}">
+    <link rel="stylesheet" href="{% static 'product_type.css' %}">
+    <link rel="stylesheet" href="{% static 'registration-validation.css' %}">
+    <link rel="stylesheet" href="{% static 'registrants.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sold-products.css' %}">
+    <link rel="stylesheet" href="{% static 'scanned-products.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
+<!--    <link href='https://fonts.googleapis.com/css?family=Lato:100italic' rel='stylesheet' type='text/css'>-->
+<!--    <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>-->
+    <!--<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
+    <link rel="stylesheet" href="{% static 'webfonts/fonts.css' %}">
+    <script src="{% static 'jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'htmx.js' %}"></script>
+    <script src="{% static 'autogrow.js' %}"></script>
+</head>
+<body>
+    <header id="main-header">
+        <div class="main-header-link-container-div">
+            <a href="{% url 'scanned-products-cashier' request.user %}"><i class="fas fa-barcode"></i> Scan Items</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'select-sell-cashier' request.user %}"><i class="fa fa-check-square"></i> Select Products</a>
+        </div>
+        <div class="main-header-link-container-div">
+            <a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
+    </header>
+    <div class="base-block-content-container-div">
+        {% block content %}
+            <section class="scanned-products-utmost-container-section">
+                <div class="scanning-product-search-products-table-div" tabindex="0">
+                    <form class="scanning-product-search-product-form" action="">
+                        {% csrf_token %}
+                        <input class="scanning-product-search-product-form-field"
+                               name="search-product-input"
+                               type="text"
+                               hx-post='{% url "async-search" request.user %}'
+                               hx-target=".scanning-products-table-results-div"
+                               hx-select=".scanning-products-table-results-div"
+                               hx-swap="outerHTML"
+                               hx-trigger="keyup"
+                        >
+                    <!--<button type="submit">Search</button>-->
+                    </form>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button class="scanning-search-products-search-btn"
+                                name="searched-products-btn"
+                                type="submit">
+
+                        </button>
+                        <div class="scanning-products-table-results-div">
+                            <table>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Type
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                    <th>
+                                        Expiry Date
+                                    </th>
+                                    <th>
+                                        Barcode
+                                    </th>
+                                </tr>
+                                {% if not searched_product_name_input %}
+                                    {% for product in products %}
+                                        <tr class="scanning-product-search-products-table-row" id="searched-product{{ product.id }}">
+                                            <td>
+                                                {{ product.name }}
+                                            </td>
+                                            <td>
+                                                {{ product.type }}
+                                            </td>
+                                            <td>
+                                                {{ product.quantity }}
+                                            </td>
+                                            <td>
+                                                {{ product.price }}
+                                            </td>
+                                            <td>
+                                                {{ product.expiry_date }}
+                                            </td>
+                                            <td>
+                                                {{ product.barcode }}
+                                            </td>
+                                            <td>
+                                                <input class="scanning-products-searched-checkbox"
+                                                       type="checkbox"
+                                                       name="searched-product-ids"
+                                                       value="{{ product.id }}">
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for product in searched_products %}
+                                        <tr class="scanning-product-search-products-table-row" id="searched-product{{ product.id }}">
+                                            <td>
+                                                {{ product.name }}
+                                            </td>
+                                            <td>
+                                                {{ product.type }}
+                                            </td>
+                                            <td>
+                                                {{ product.quantity }}
+                                            </td>
+                                            <td>
+                                                {{ product.price }}
+                                            </td>
+                                            <td>
+                                                {{ product.expiry_date }}
+                                            </td>
+                                            <td>
+                                                {{ product.barcode }}
+                                            </td>
+                                            <td>
+                                                <input class="scanning-products-searched-checkbox"
+                                                       type="checkbox"
+                                                       name="searched-product-ids"
+                                                       value="{{ product.id }}">
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            </table>
+                        </div>
+                    </form>
+                </div>
+        <!--        <div class="username" id="username{{ request.user }}">{{ barcode_data }}</div>-->
+                <div class="scanned-products-products-scanned-list">
+                    <div class="scanned-products-container" id="scanned-products-container">
+                        <div class="scanned-products-scanned-product">
+                            <div class="scanned-products-scanned-product-label-container-div">
+                                Product Name:
+                            </div>
+                            <div class="scanned-products-scanned-product-detail">
+                                <form action=""></form>
+                                {{ scanned_product_header.name }}
+                            </div>
+                            <div class="scanned-products-scanned-product-label-container-div">
+                                Barcode:
+                            </div>
+                            <div class="scanned-products-scanned-product-detail">
+                                <form style='position:absolute;' action='{% url "scanned-products-cashier" request.user %}'  method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="scanned-barcode" id="scanned-barcode">
+                                    <button hx-post='{% url "scanned-products-cashier" request.user %}'
+                                            hx-target=".scanned-products-utmost-container-section"
+                                            hx-select=".scanned-products-utmost-container-section"
+                                            hx-swap="innerHTML"
+                                            hx-trigger="click"
+                                            style="background: none; border: none;">
+                                    </button>
+                                </form>
+                                <span id="scanned-product-barcode">
+                                    {{ scanned_product_header.barcode }}
+                                </span>
+                            </div>
+                            <div class="scanned-products-scanned-product-label-container-div">
+                                Price:
+                            </div>
+                            <div class="scanned-products-scanned-product-detail">
+                                {{ scanned_product_header.price }}
+                            </div>
+                            <div class="scanned-products-scanned-product-label-container-div">
+                                Expiry Date:
+                            </div>
+                            <div class="scanned-products-scanned-product-detail">
+                                {{ scanned_product_header.expiry_date }}
+                            </div>
+                        </div>
+                        <div class="scanned-products-table-container-div">
+                            {% for products in scanned_products %}
+                                <div class="scanned-products-total-price-container-div">
+                                    {{ products.summed_product_price }}
+                                </div>
+                            {% endfor %}
+                            <div class="table">
+                                <table>
+                                   {% for products in scanned_products %}
+                                        <tr class="scanned-products-table-row" id="scanned-products-row{{ product.id }}">
+                                            <th class="scanned-products-table-head" id="scanned-products-table-head-name">
+                                                Name
+                                            </th>
+                                            <th class="scanned-products-table-head" id="scanned-products-table-head-quantity">
+                                                Quantity
+                                            </th>
+                                            <th class="scanned-products-table-head" id="scanned-products-table-head-price">
+                                                Price
+                                            </th>
+                                        </tr>
+                                        {% for product in products.product.all %}
+                                            <tr class="scanned-products-table-row"
+                                                id="scanned-product-row{{ product.id }}">
+                                                <td class="scanned-products-table-data" id="scanned-products-table-data-name">
+                                                    <form hx-trigger="htmx:afterSwap">
+                                                        {% csrf_token %}
+                                                        <button class="scanned-products-product-name-btn"
+                                                                hx-post="{% url 'remove-product' request.user product.barcode %}"
+                                                                hx-target=".scanned-products-utmost-container-section"
+                                                                hx-select=".scanned-products-utmost-container-section"
+                                                                hx-swap="innerHTML"
+                                                                hx-trigger="click"
+                                                                id="select-sell-remove-selected-product-btn">
+                                                            {{ product.name }}
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                <td class="scanned-products-table-data" id="scanned-products-table-data-quantity">
+        <!--                                            <div class="select-sell-quantity-element">-->
+        <!--                                                {% if product.scanned_quantity > 1 %}-->
+        <!--                                                    <form hx-trigger="htmx:afterSwap">-->
+        <!--                                                        {% csrf_token %}-->
+        <!--                                                        <div>-->
+        <!--                                                            <button hx-post="{% url 'subtract-quantity' request.user product.barcode %}"-->
+        <!--                                                                    hx-target=".scanned-products-utmost-container-section"-->
+        <!--                                                                    hx-select=".scanned-products-utmost-container-section"-->
+        <!--                                                                    hx-swap="innerHTML"-->
+        <!--                                                                    id="select-sell-subtract-quantity"-->
+        <!--                                                                    class="select-sell-quantity-btn">-->
+        <!--                                                                - -->
+        <!--                                                            </button>-->
+        <!--                                                        </div>-->
+        <!--                                                    </form>-->
+        <!--                                                {% endif %}-->
+        <!--                                            </div>-->
+                                                    <div class="select-sell-quantity-element">
+                                                        <form action="">
+                                                            <button type="button"
+                                                                    id="toggle-quantity-product btn-{{ product.id }}"
+                                                                    class="toggle-quantity-product-btns"
+                                                            >
+                                                                {{ product.scanned_quantity }}
+                                                            </button>
+                                                        </form>
+                                                        <form method="POST"
+                                                              id="toggle-quantity-conf-form{{ product.id }}"
+                                                              class="toggle-quantity-conf-forms"
+                                                        >
+                                                            {% csrf_token %}
+                                                            <input name='product-quantity-id'
+                                                                   type="hidden"
+                                                                   value="{{ product.id }}"
+                                                            >
+                                                            <input name='product-quantity-cashier'
+                                                                   type="hidden"
+                                                                   value="{{ request.user.id }}"
+                                                            >
+                                                            <input class="product-configure-quantity-fields"
+                                                                   style='width:20px;'
+                                                                   type="number"
+                                                                   name="product-quantity-quantity"
+                                                                   max="{{ product.quantity }}"
+                                                                   oninput="validateQuantity(this)"
+                                                                   value="{{ product.scanned_quantity }}"
+                                                            >
+                                                            <button style='display: none' name="quantity-configuration-form"></button>
+                                                        </form>
+                                                    </div>
+        <!--                                            <div class="select-sell-quantity-element">-->
+        <!--                                                {% if not product.quantity <= 0 %}-->
+        <!--                                                    <form hx-trigger="htmx:afterSwap">-->
+        <!--                                                        {% csrf_token %}-->
+        <!--                                                        <div>-->
+        <!--                                                            <button hx-post="{% url 'add-quantity' request.user product.barcode %}"-->
+        <!--                                                                    hx-target=".scanned-products-utmost-container-section"-->
+        <!--                                                                    hx-select=".scanned-products-utmost-container-section"-->
+        <!--                                                                    hx-swap="innerHTML"-->
+        <!--                                                                    id="select-sell-add-quantity"-->
+        <!--                                                                    class="select-sell-quantity-btn">-->
+        <!--                                                                +-->
+        <!--                                                            </button>-->
+        <!--                                                        </div>-->
+        <!--                                                    </form>-->
+        <!--                                                {% endif %}-->
+        <!--                                            </div>-->
+                                                </td>
+                                                <td class="scanned-products-table-data" id="scanned-products-table-data-price">
+                                                    {{ product.multiply }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scanned-sell-clear-change-div">
+                        {% include 'clear_change.html' %}
+                        <div class="selected-sell-cash-form">
+                            {% if not scanned_sum == 0 %}
+                            <form action="{% url 'sell-scanned-products' request.user" hx-trigger="htmx:afterSwap">
+                                {% csrf_token %}
+                                <div>
+                                    <input type="number"
+                                           name="cash"
+                                           id="customer-cash"
+                                           placeholder="Cash"
+                                           required
+                                           class="select-sell-cash-input-field"
+                                    >
+                                </div>
+                                <div>
+                                    <button hx-post="{% url 'sell-scanned-products' request.user %}"
+                                            hx-target=".scanned-products-utmost-container-section"
+                                            hx-select=".scanned-products-utmost-container-section"
+                                            hx-indicator=".loading-spinner"
+                                            hx-swap="innerHTML" id="select-sell-sell-products-btn"
+                                            hx-trigger="click">
+                                        Issue
+                                        <span class="loading-spinner"></span>
+                                    </button>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endblock %}
+    </div>
+    <div id="scanned-products-test-div">
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleQuantityField();
+          // HTMX event listener to reapply the toggle functionality after successful response
+          document.addEventListener('htmx:afterSwap', function(event) {
+            toggleQuantityField();
+          });
+
+        });
+
+        function toggleQuantityField() {
+            const toggleQualityConfBtns = document.querySelectorAll('.toggle-quantity-product-btns');
+
+            toggleQualityConfBtns.forEach((button) => {
+                button.addEventListener('click', ()=> {
+                    let id = button.id.replace('toggle-quantity-product btn-', '');
+                    let quantityForm = document.getElementById(`toggle-quantity-conf-form${id}`);
+
+                    quantityForm.classList.toggle('toggle-quantity-conf-form');
+                    button.classList.toggle('toggle-quantity-product-btn-hide');
+                });
+            });
+        };
+
+    </script>
+    <script>
+        function validateQuantity(input) {
+            var maxQuantity = parseInt(input.getAttribute('max'));
+            var maxDigits = maxQuantity.toString().length;
+            input.maxLength = maxDigits;
+
+            var enteredValue = parseInt(input.value);
+
+            if (enteredValue > maxQuantity) {
+                input.setCustomValidity('');
+                input.reportValidity();
+                input.value = maxQuantity;
+            } else {
+                input.setCustomValidity('');
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', ()=> {
+            toggleSearchedProducts();
+          // HTMX event listener to reapply the toggle functionality after successful response
+          document.addEventListener('htmx:afterSwap', function(event) {
+            toggleSearchedProducts();
+          });
+        });
+
+        function toggleSearchedProducts() {
+
+            //const checkSearchedProductsId = [];
+
+            const searchedProductsTableRows = document.querySelectorAll('.scanning-product-search-products-table-row');
+            const searchedProductsTextbox = document.querySelectorAll('.scanning-products-searched-checkbox')
+            const searchedProductsId = document.querySelectorAll('.scanning-products-searched-checkbox-id');
+            const searchedProductsName = document.querySelectorAll('.scanning-products-searched-checkbox-name');
+
+            searchedProductsTableRows.forEach((row, i, a) => {
+                row.addEventListener('click', ()=> {
+                    searchedProductsTextbox[i].checked = !searchedProductsTextbox[i].checked;
+
+                    //if (searchedProductsTextbox[i].checked) {
+                    //    checkSearchedProductsId.push(searchedProductsId[i].value);
+                    //} else {
+                    //    const index = checkSearchedProductsId.indexOf(searchedProductsId[i].value);
+                    //    if (index > -1) {
+                    //        checkSearchedProductsId.splice(index, 1);
+                    //    }
+                    //}
+                });
+            });
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            keyEvents();
+
+            // HTMX event listener to reapply the toggle functionality after successful response
+            document.addEventListener('htmx:afterSwap', function(event) {
+                keyEvents();
+            });
+
+            document.addEventListener('click', function(event) {
+                keyEvents();
+            });
+
+        });
+
+        function keyEvents() {
+            let i = 0;
+            let i_search = -1;
+
+            document.addEventListener('keydown', function(event) {
+                const inputField = document.getElementById('scanned-barcode');
+                const cashInput = document.querySelector('.select-sell-cash-input-field');
+                const searchInput = document.querySelector('.scanning-product-search-product-form-field');
+                const scannedProductBarcode = document.getElementById('scanned-product-barcode');
+                const issueButton = document.getElementById('select-sell-sell-products-btn');
+                const issueField = document.querySelector('.select-sell-cash-input-field');
+                const clearChangeBtn = document.querySelector('.clear-change-btn');
+                const searchProductBtn = document.querySelector('.scanning-search-products-search-btn');
+                const quantityInputs = document.querySelectorAll('.product-configure-quantity-fields');
+                const scannedProductRows = document.querySelectorAll('.scanned-products-table-row');
+                const searchedProductsRows = document.querySelectorAll('.scanning-product-search-products-table-row');
+                const searchedProductCheckbox = document.querySelectorAll('.scanning-products-searched-checkbox');
+                const toggleQualityConfBtns = document.querySelectorAll('.toggle-quantity-product-btns');
+                const productQuantityFields = document.querySelectorAll('.product-configure-quantity-fields');
+                const searchedProductsBlock = document.querySelector('.scanning-product-search-products-table-div');
+                const toggleQualityCnfBtns = document.querySelectorAll('.toggle-quantity-product-btns');
+                const QuantityConfForms = document.querySelectorAll('.toggle-quantity-conf-forms');
+                const scannedProductNameBtns = document.querySelectorAll('.scanned-products-product-name-btn');
+
+                if (event.key === 'ArrowDown') {
+                    if (!searchedProductsBlock.classList.contains('scanning-product-search-products-table-div-show')) {
+                        // Remove highlight from the current row
+                        if (i >= 0 && i < scannedProductRows.length) {
+                            scannedProductRows[i].classList.remove('scanned-product-row-highlight');
+                        }
+
+                        // Increment index
+                        i++;
+                        if (i >= scannedProductRows.length) {
+                            i = scannedProductRows.length - 1; // Ensure the index does not go out of bounds
+                        }
+
+                        // Add highlight to the new row
+                        if (i >= 0 && i < scannedProductRows.length) {
+                            scannedProductRows[i].classList.add('scanned-product-row-highlight');
+                        }
+
+                        document.querySelectorAll('.scanned-product-row-highlight').forEach((tableRow) => {
+                            if (scannedProductRows[i].id !== tableRow.id) {
+                                tableRow.classList.remove('scanned-product-row-highlight');
+                            }
+                            // console.log(`main row ${searchedProductsRows[i_search].id} not main ${row.id}`);
+                        });
+
+
+                        // console.log(i);
+                    } else {
+                        searchInput.blur();
+                        searchedProductsBlock.focus();
+                        // Remove highlight from the current row
+                        if (i_search >= 0 && i_search < searchedProductsRows.length) {
+                            searchedProductsRows[i_search].classList.remove('scanned-product-row-highlight');
+                        }
+
+                        // Increment index
+                        i_search++;
+                        if (i_search >= searchedProductsRows.length) {
+                            i_search = searchedProductsRows.length - 1; // Ensure the index does not go out of bounds
+                        }
+
+                        // Add highlight to the new row
+                        if (i_search >= 0 && i_search < searchedProductsRows.length) {
+                            searchedProductsRows[i_search].classList.add('scanned-product-row-highlight');
+                        }
+
+                        document.querySelectorAll('.scanned-product-row-highlight').forEach((row, ind) => {
+                            if (searchedProductsRows[i_search].id !== row.id) {
+                                row.classList.remove('scanned-product-row-highlight');
+                            }
+                            // console.log(`main row ${searchedProductsRows[i_search].id} not main ${row.id}`);
+                        });
+
+                    }
+                } else if (event.key === 'ArrowUp') {
+                    if (!searchedProductsBlock.classList.contains('scanning-product-search-products-table-div-show')) {
+                        // Remove highlight from the current row
+                        if (i >= 0 && i < scannedProductRows.length) {
+                            scannedProductRows[i].classList.remove('scanned-product-row-highlight');
+                        }
+
+                        // Decrement index
+                        i--;
+                        if (i < 0) {
+                            i = 0; // Ensure the index does not go out of bounds
+                        }
+
+                        // Add highlight to the new row
+                        if (i >= 0 && i < scannedProductRows.length) {
+                            scannedProductRows[i].classList.add('scanned-product-row-highlight');
+                        }
+
+                        document.querySelectorAll('.scanned-product-row-highlight').forEach((tableRow) => {
+                            if (scannedProductRows[i].id !== tableRow.id) {
+                                tableRow.classList.remove('scanned-product-row-highlight');
+                            }
+                            // console.log(`main row ${searchedProductsRows[i_search].id} not main ${row.id}`);
+                        });
+
+                        // console.log(i);
+                    } else {
+                        searchInput.blur();
+                        searchedProductsBlock.focus();
+                        // Remove highlight from the current row
+                        if (i_search >= 0 && i_search < searchedProductsRows.length) {
+                            searchedProductsRows[i_search].classList.remove('scanned-product-row-highlight');
+                        }
+
+                        // Decrement index
+                        i_search--;
+                        if (i_search < 0) {
+                            i_search = 0; // Ensure the index does not go out of bounds
+                        }
+
+                        // Add highlight to the new row
+                        if (i_search >= 0 && i_search < searchedProductsRows.length) {
+                            searchedProductsRows[i_search].classList.add('scanned-product-row-highlight');
+                        }
+
+                        document.querySelectorAll('.scanned-product-row-highlight').forEach((row, ind) => {
+                            if (searchedProductsRows[i_search].id !== row.id) {
+                                row.classList.remove('scanned-product-row-highlight');
+                            }
+                            // console.log(`main row ${searchedProductsRows[i_search].id} not main ${row.id}`);
+                        });
+                    }
+                }
+
+                if (event.key === 'q' && event.ctrlKey || event.key === 'Q' && event.ctrlKey) {
+                    event.preventDefault();
+                    searchedProductsBlock.focus();
+                    if (searchedProductsRows[i_search].classList.contains('scanned-product-row-highlight')) {
+                        searchedProductCheckbox[i_search].checked = !searchedProductCheckbox[i_search].checked;
+                        searchedProductsRows[i_search].classList.toggle('.scanned-product-row-highlight-selected');
+                    }
+
+                    if (searchedProductsBlock.focus()) {
+                        console.log('search block focused');
+                    }
+                }
+
+                if (event.key === 's' && event.ctrlKey || event.key === 'S' && event.ctrlKey) {
+                    event.preventDefault();
+                    searchedProductsBlock.focus();
+                    searchedProductsBlock.classList.toggle('scanning-product-search-products-table-div-show');
+                    // searchInput.focus();
+                }
+
+                if ((event.key === 'd' && event.ctrlKey) || (event.key === 'D' && event.ctrlKey)) {
+                    event.preventDefault();
+
+                    if (document.activeElement === searchInput) {
+                        searchInput.blur(); // If the searchInput is focused, blur it
+                    } else {
+                        searchInput.focus(); // Otherwise, focus it
+                    }
+                }
+
+                if (scannedProductRows[i].classList.contains('scanned-product-row-highlight') && (event.key === 'r' || event.key === 'R') && event.shiftKey) {
+                    event.preventDefault();
+                    let moIn = i - 1;
+                    // Set up the htmx request manually
+                    // Trigger the htmx request by clicking the button programmatically
+                    scannedProductNameBtns[moIn].click();
+                }
+
+                if (event.key === 'T' && event.shiftKey || event.key === 't' && event.shiftKey) {
+                    event.preventDefault();
+                    var modix = i - 1;
+
+                    toggleQualityCnfBtns[modix].classList.toggle('toggle-quantity-product-btn-hide');
+                    QuantityConfForms[modix].classList.toggle('toggle-quantity-conf-form');
+                    if (scannedProductRows[i].classList.contains('scanned-product-row-highlight')) {
+                        productQuantityFields[modix].focus();
+                    } else {
+                        productQuantityFields[modix].blur();
+                    }
+                }
+
+                if (event.key === 'a' && event.ctrlKey || event.key === 'A' && event.ctrlKey) {
+                    event.preventDefault();
+                    if (searchProductBtn) {
+                        searchProductBtn.click();
+                    }
+                }
+
+                // Check if 'i', 's', or 'c' keys are pressed
+                if (event.key === 'I' && event.shiftKey || event.key === 'i' && event.shiftKey) {
+                    event.preventDefault(); // Prevent the default action for "i" key if needed
+                    if (issueButton) {
+                        issueButton.click();
+                    }
+                    return; // Stop further execution
+                }
+
+                if (event.key === 's' && event.shiftKey || event.key === 'S' && event.shiftKey) {
+                    event.preventDefault(); // Prevent the default action for "s" key if needed
+                    if (issueField) {
+                        issueField.focus();
+                    }
+                    return; // Stop further execution
+                }
+
+                if (event.key === 'c' && event.shiftKey || event.key === 'C' && event.shiftKey) {
+                    event.preventDefault(); // Prevent the default action for "c" key if needed
+                    if (clearChangeBtn) {
+                        clearChangeBtn.click();
+                    }
+                    return; // Stop further execution
+                }
+
+                // If none of the special keys were pressed, handle focusing the quantity and barcode inputs
+                let focused = false;
+
+                quantityInputs.forEach((quantityInput) => {
+                    if (document.activeElement == quantityInput) {
+                        quantityInput.focus();
+                        focused = true;
+                    }
+                });
+
+                if (document.activeElement == searchInput) {
+                    searchInput.focus();
+                    focused = true;
+                }
+
+                if (!focused && document.activeElement !== cashInput) {
+                    inputField.focus();
+                    // Optionally hide the scannedProductBarcode
+                    // scannedProductBarcode.style.display = 'none';
+                }
+            });
+        }
+    </script>
+    <script>
+        const toggleBtns = document.querySelectorAll('.scanned-products-add-quantity-form-toggle-btn');
+
+        toggleBtns.forEach(function(toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                productId = toggleBtn.id.replace('toggleBtn', '');
+
+                addQuantityForm = document.getElementById(`scanned-products-form${productId}`);
+                scannedProductsQuantity = document.getElementById(`scanned-products-quantity-anchor${productId}`);
+
+                addQuantityForm.classList.toggle('scanned-products-show-add-quantity-form');
+                scannedProductsQuantity.classList.toggle('scanned-products-blot-quantity');
+
+                console.log('works');
+
+                toggleBtns.forEach(otherButton => {
+                    if (otherButton !== toggleBtn) {
+                        const otherBookId = otherButton.id.replace('toggleBtn', '');
+                        const otherBookDetailsElement = document.getElementById(`scanned-products-form${otherBookId}`);
+                        const otherScannedProductsQuantity = document.getElementById(`scanned-products-quantity-anchor${otherBookId}`);
+
+                        otherBookDetailsElement.classList.remove('scanned-products-show-add-quantity-form');
+                        otherScannedProductsQuantity.classList.remove('scanned-products-blot-quantity');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+.add-expense-form-container-div{
+    width: 50%;
+    margin: auto;
+    margin-top: 40px;
+    background-color: rgb(100, 150, 150);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgb(100, 150, 150);
+}
+
+.add-expense-form-field-div{
+    margin: 20px;
+    text-align: center;
+}
+
+.add-expense-form-image-field-div{
+    background-color: rgb(10, 50, 50);
+    width: 63%;
+    margin: auto;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    color: beige;
+    cursor: pointer;
+}
+
+.add-expense-btn-div{
+    text-align: center;
+}
+
+.add-expense-field{
+    width: 70%;
+    height: 30px;
+    resize: none;
+    border-radius: 5px;
+    border: 1px rgb(150, 150, 150) solid;
+}
+
+.add-expense-field:focus{
+    outline: none;
+}
+
+.add-expense-btn{
+    background-color: rgb(10, 50, 50);
+    color: beige;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: rgb(100, 150, 150);
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    cursor: pointer;
+}
+
+.add-expense-title-header-div{
+    font-family: 'Montserrat';
+    text-align: center;
+    margin: 10px;
+    font-size: 30px;
+    color: rgb(120, 120, 120);
+}
